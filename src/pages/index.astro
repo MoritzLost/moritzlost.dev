@@ -3,15 +3,35 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@layouts/Section.astro';
 import ProjectTeaser from '@components/ProjectTeaser.astro';
+import ArticleTeaser from '@components/ArticleTeaser.astro';
+import Emoji from '@components/Emoji.astro';
+import { sortArticlesByDatePrefix } from '@utils/sort-content';
 
 const projects = await getCollection('projects');
+const articles = await getCollection('articles');
+const articlesSorted = sortArticlesByDatePrefix(articles);
 ---
 
 <BaseLayout title="Welcome to Astro.">
-    <article>
-        <Section>
-            <h2>Projects</h2>
-            {projects.map(project => <ProjectTeaser {project} />)}
-        </Section>
-    </article>
+    <Section id="about-me" aria-labelledby="about-me-headline">
+        <h1 id="about-me-headline">Hi <Emoji emoji="👋" /></h1>
+    </Section>
+
+    <Section id="projects" headline="Projects" headlineId="projects-headline">
+        {projects.map(project => <ProjectTeaser {project} />)}
+    </Section>
+
+    <Section id="articles" headline="Articles" headlineId="aricles-headline">
+        {articlesSorted.map(article => <ArticleTeaser {article} />)}
+    </Section>
 </BaseLayout>
+
+<style lang="postcss">
+    :global(main > section + section) {
+        margin-top: clamp(3rem, 5vw, 8rem);
+    }
+
+    :global(section > *){
+        max-width: 65rem;
+    }
+</style>

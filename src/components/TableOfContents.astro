@@ -15,11 +15,6 @@ const hierarchy = createHeadingsHierarchy(headings);
 <nav aria-label="Table of Contents">
     <button aria-controls="toc-wrapper" aria-expanded="false"> Table of Contents ↓</button>
     <div id="toc-wrapper"><TableOfContentsList {hierarchy} /></div>
-    <script is:inline>
-        if (!window.matchMedia('(min-width: 90rem)').matches) {
-            document.getElementById('toc-wrapper').hidden = true;
-        }
-    </script>
 </nav>
 
 <style>

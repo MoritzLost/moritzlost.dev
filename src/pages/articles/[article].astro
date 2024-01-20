@@ -34,83 +34,74 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
 ---
 
 <BaseLayout title={article.data.title}>
-    <main>
-        <div class="article-layout">
-            <aside>
-                <TableOfContents {headings} />
-            </aside>
+    <div class="article-layout">
+        <aside>
+            <TableOfContents {headings} />
+        </aside>
 
-            <ArticleContent>
-                <h1>{article.data.title}</h1>
-                <p class="subline-author">
-                    — by Moritz L'Hoest <span class="subline-divider">·</span>
-                    <Time date={publishedDate} />
-                </p>
+        <ArticleContent>
+            <h1>{article.data.title}</h1>
+            <p class="subline-author">
+                — by Moritz L'Hoest <span class="subline-divider">·</span>
+                <Time date={publishedDate} />
+            </p>
 
-                <Content />
+            <Content />
 
-                <footer class="article-footer">
-                    <hr />
+            <footer class="article-footer">
+                <hr />
+                {
+                    article.data.disclaimerNoAI && (
+                        <p class="no-ai-disclaimer">
+                            This article was written by a human without the involvement of AI.
+                        </p>
+                    )
+                }
+
+                <p class="article-meta">
+                    <span><Emoji emoji="💡" /> Published on <Time date={publishedDate} /></span>
                     {
-                        article.data.disclaimerNoAI && (
-                            <p class="no-ai-disclaimer">
-                                This article was written by a human without the involvement of AI.
-                            </p>
+                        lastRevision && (
+                            <span>
+                                <Emoji emoji="✏️" /> Last edited on <Time date={new Date(lastRevision.date)} />
+                            </span>
                         )
                     }
-
-                    <p class="article-meta">
-                        <span><Emoji emoji="💡" /> Published on <Time date={publishedDate} /></span>
-                        {
-                            lastRevision && (
-                                <span>
-                                    <Emoji emoji="✏️" /> Last edited on <Time date={new Date(lastRevision.date)} />
-                                </span>
-                            )
-                        }
-                        {
-                            hasRevisionHistory && (
-                                <span>
-                                    <Emoji emoji="🗂️" /> <a href={fileHistoryUrl}>View revision history</a>
-                                </span>
-                            )
-                        }
-                        <span><Emoji emoji="💡" /> <a href={editUrl}>Suggest an edit</a></span>
-                    </p>
-                </footer>
-            </ArticleContent>
-        </div>
-    </main>
+                    {
+                        hasRevisionHistory && (
+                            <span>
+                                <Emoji emoji="🗂️" /> <a href={fileHistoryUrl}>View revision history</a>
+                            </span>
+                        )
+                    }
+                    <span><Emoji emoji="💡" /> <a href={editUrl}>Suggest an edit</a></span>
+                </p>
+            </footer>
+        </ArticleContent>
+    </div>
 </BaseLayout>
 
 <style lang="postcss">
-    main {
-        margin-block: clamp(3rem, 4vw, 6rem);
-        margin-inline: clamp(1.5rem, 3vw, 3rem);
-    }
-
     .article-layout {
         display: grid;
-        gap: 3rem;
+        column-gap: 5rem;
+        row-gap: 3rem;
         justify-content: center;
         grid-template-columns: minmax(0, 45rem);
         grid-template-areas: 'toc' 'content';
 
         > aside {
             grid-area: toc;
-            > :global(* + *) {
-                margin-top: var(--stack-gap);
-            }
         }
 
-        > :global(.article) {
+        > :global(article) {
             grid-area: content;
         }
     }
 
-    @media (min-width: 90rem) {
+    @media (min-width: 65rem) {
         .article-layout {
-            grid-template-columns: minmax(0, 45rem) 20rem;
+            grid-template-columns: minmax(35rem, 45rem) 20rem;
             grid-template-areas: 'content toc';
 
             > aside {

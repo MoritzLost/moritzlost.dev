@@ -1,6 +1,6 @@
 ---
 import Html from './Html.astro';
-import Sidebar from './Sidebar.astro';
+import Navigation from './Navigation.astro';
 
 interface Props {
     title: string;
@@ -12,29 +12,20 @@ const { title, description } = Astro.props;
 
 <Html {title} {description}>
     <div class="page-layout">
-        <header>
-            <Sidebar />
-        </header>
-        <slot />
+        <Navigation />
+        <main id="main">
+            <slot />
+        </main>
     </div>
 </Html>
 
 <style>
     .page-layout {
         display: grid;
-        grid-template-areas: 'article' 'sidebar';
+        gap: clamp(3rem, 5vw, 8rem);
+    }
 
-        @media (min-width: 50rem) {
-            grid-template-areas: 'sidebar article';
-            grid-template-columns: 20rem minmax(0, 1fr);
-
-            > header {
-                display: grid;
-                max-height: 100vh;
-                max-height: 100dvh;
-                position: sticky;
-                top: 0;
-            }
-        }
+    main {
+        margin-inline: clamp(1.5rem, 3vw, 3rem);
     }
 </style>
