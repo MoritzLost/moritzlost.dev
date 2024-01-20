@@ -1,0 +1,36 @@
+---
+---
+
+<section class="section">
+    <div class="article">
+        <slot />
+    </div>
+</secti>
+
+<style lang="postcss">
+    .container {
+        --container-padding-x: 1.5rem;
+
+        width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-areas: '. content .';
+
+        grid-template-columns:
+            [fullwidth-start]
+            var(--container-padding-x)
+            [content-start]
+            minmax(0, max-content)
+            [content-end]
+            var(--container-padding-x)
+            [fullwidth-end];
+
+        > :global(*) {
+            grid-column: content-start / content-end;
+        }
+    }
+
+    article {
+        max-width: var(--article-max-width, 65rem);
+    }
+</style>

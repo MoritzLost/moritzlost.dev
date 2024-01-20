@@ -1,0 +1,48 @@
+:root {
+    --primary: #33607c;
+    --muted: #292f33;
+    --border-color: #bbb;
+
+    --body-color: #0a0c0d;
+    --body-background: #fcfcf2;
+
+    --font-family-base: 'Fira Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans',
+        'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+    --font-family-mono: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', 'Lucida Console', 'Ubuntu Mono',
+        Menlo, Monaco, Courier, 'Courier New', monospace;
+
+    --font-size-xs: 0.875rem;
+    --font-size-sm: 1rem;
+    --font-size-base: 1.25rem;
+    --font-size-lg: 1.5rem;
+    --font-size-xl: 1.75rem;
+
+    --font-weight-light: 300;
+    --font-weight-base: 400;
+    --font-weight-bold: 600;
+
+    --line-height-sm: 1.2;
+    --line-height-base: 1.6;
+    --line-height-lg: 1.8;
+
+    --headings-font-family: 'Vollkorn';
+    --headings-line-height: 1.2;
+    --headings-font-weight: 600;
+    --headings-font-style: normal;
+
+    --h1-font-size: 3.25rem;
+    --h2-font-size: 2.5rem;
+    --h3-font-size: 2rem;
+    --h4-font-size: 1.5rem;
+    --h5-font-size: 1.25rem;
+    --h6-font-size: 1rem;
+
+    --link-color: var(--primary);
+    --link-text-decoration: underline;
+    --link-hover-color: var(--primary-dark);
+    --link-hover-text-decoration: underline;
+
+    --stack-gap: 1.5rem;
+    --stack-gap-headings: clamp(2rem, 6vw, 3rem);
+}

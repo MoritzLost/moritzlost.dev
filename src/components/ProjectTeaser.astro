@@ -1,0 +1,33 @@
+---
+import { getEntries, type CollectionEntry } from 'astro:content'
+
+interface Props {
+    project: CollectionEntry<'projects'>
+}
+
+const { project } = Astro.props;
+const repos = await getEntries(project.data.repositories)
+---
+
+<h2>{project.data.title}</h2>
+
+<p>Repositories:</p>
+
+<ul>
+    {repos.map(repo =>
+        <li>
+            <p>{repo.data.github.description}</p>
+            <p>url: {repo.data.github.url}</p>
+            <p>private: {repo.data.github.private ? 'True' : 'False'}</p>
+            <p>created_at: {repo.data.github.created_at}</p>
+            <p>updated_at: {repo.data.github.updated_at}</p>
+            <p>pushed_at: {repo.data.github.pushed_at}</p>
+            <p>subscribers_count: {repo.data.github.subscribers_count}</p>
+            <p>stargazers_count: {repo.data.github.stargazers_count}</p>
+            <p>watchers: {repo.data.github.watchers}</p>
+            <p>language: {repo.data.github.language}</p>
+            <p>license: {JSON.stringify(repo.data.github.license, null, 4)}</p>
+            <p>topics: {repo.data.github.topics ? repo.data.github.topics.join(', ') : ''}</p>
+        </li>
+    )}
+</ul>

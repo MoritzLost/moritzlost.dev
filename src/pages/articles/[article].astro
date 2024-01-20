@@ -1,0 +1,159 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleContent from '@components/ArticleContent.astro';
+import TableOfContents from '@components/TableOfContents.astro';
+import Emoji from '@components/Emoji.astro';
+import Time from '@components/Time.astro';
+import { sortArticlesByDatePrefix } from '@utils/sort-content';
+
+interface Props {
+    article: CollectionEntry<'articles'>;
+    articles: Array<CollectionEntry<'articles'>>;
+}
+
+export async function getStaticPaths() {
+    const articles = await getCollection('articles');
+    const articlesSorted = sortArticlesByDatePrefix(articles);
+    return articles.map(article => ({
+        params: { article: article.slug },
+        props: { article, articles: articlesSorted },
+    }));
+}
+
+const { article, articles } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await article.render();
+
+const markdownPath = `src/content/${article.collection}/${article.id}`;
+const fileHistoryUrl = `https://github.com/MoritzLost/moritzlost.de/commits/main/${markdownPath}`;
+const editUrl = `https://github.com/MoritzLost/moritzlost.de/edit/main/${markdownPath}`;
+
+const publishedDate = new Date(remarkPluginFrontmatter.publishedDate);
+const hasRevisionHistory = remarkPluginFrontmatter.revisionHistory.length > 1;
+const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHistory[0];
+---
+
+<BaseLayout title={article.data.title}>
+    <main>
+        <div class="article-layout">
+            <aside>
+                <TableOfContents {headings} />
+            </aside>
+
+            <ArticleContent>
+                <h1>{article.data.title}</h1>
+                <p class="subline-author">
+                    — by Moritz L'Hoest <span class="subline-divider">·</span>
+                    <Time date={publishedDate} />
+                </p>
+
+                <Content />
+
+                <footer class="article-footer">
+                    <hr />
+                    {
+                        article.data.disclaimerNoAI && (
+                            <p class="no-ai-disclaimer">
+                                This article was written by a human without the involvement of AI.
+                            </p>
+                        )
+                    }
+
+                    <p class="article-meta">
+                        <span><Emoji emoji="💡" /> Published on <Time date={publishedDate} /></span>
+                        {
+                            lastRevision && (
+                                <span>
+                                    <Emoji emoji="✏️" /> Last edited on <Time date={new Date(lastRevision.date)} />
+                                </span>
+                            )
+                        }
+                        {
+                            hasRevisionHistory && (
+                                <span>
+                                    <Emoji emoji="🗂️" /> <a href={fileHistoryUrl}>View revision history</a>
+                                </span>
+                            )
+                        }
+                        <span><Emoji emoji="💡" /> <a href={editUrl}>Suggest an edit</a></span>
+                    </p>
+                </footer>
+            </ArticleContent>
+        </div>
+    </main>
+</BaseLayout>
+
+<style lang="postcss">
+    main {
+        margin-block: clamp(3rem, 4vw, 6rem);
+        margin-inline: clamp(1.5rem, 3vw, 3rem);
+    }
+
+    .article-layout {
+        display: grid;
+        gap: 3rem;
+        justify-content: center;
+        grid-template-columns: minmax(0, 45rem);
+        grid-template-areas: 'toc' 'content';
+
+        > aside {
+            grid-area: toc;
+            > :global(* + *) {
+                margin-top: var(--stack-gap);
+            }
+        }
+
+        > :global(.article) {
+            grid-area: content;
+        }
+    }
+
+    @media (min-width: 90rem) {
+        .article-layout {
+            grid-template-columns: minmax(0, 45rem) 20rem;
+            grid-template-areas: 'content toc';
+
+            > aside {
+                align-self: start;
+                position: sticky;
+                top: 3rem;
+            }
+        }
+    }
+
+    .subline-author {
+        --stack-gap: 0;
+        font-size: var(--font-size-lg);
+        font-family: var(--headings-font-family);
+        font-weight: var(--headings-font-weight);
+    }
+
+    .subline-divider {
+        padding-inline: .5rem;
+    }
+
+    .article-footer {
+        margin-top: 5rem;
+        font-size: var(--font-size-sm);
+        > * + * {
+            margin-top: 1.5rem;
+        }
+    }
+
+    .no-ai-disclaimer {
+        font-style: italic;
+    }
+
+    .article-meta {
+        > * {
+            display: block;
+        }
+        > * + * {
+            margin-top: .5rem;
+        }
+    }
+
+    .article-link {
+        display: grid;
+    }
+</style>

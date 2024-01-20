@@ -1,0 +1,13 @@
+---
+interface Props {
+    date: Date | string;
+}
+
+let { date } = Astro.props;
+if (!(date instanceof Date)) {
+    date = new Date(date);
+}
+const iso8601Date = date.toISOString().substring(0, 10);
+---
+
+<time datetime={iso8601Date}>{iso8601Date}</time>
