@@ -90,6 +90,8 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
         --article-min-width: 45ch;
         --article-max-width: 65ch;
 
+        padding-inline: var(--container-padding-x);
+
         display: grid;
         column-gap: 5rem;
         row-gap: var(--stack-gap-headings);
@@ -110,7 +112,7 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
         }
     }
 
-    @media (min-width: 75rem) {
+    @media (min-width: 70rem) {
         .article-layout {
             grid-template-columns: minmax(var(--article-min-width), var(--article-max-width)) var(--sidebar-width);
             grid-template-areas: 'header aside' 'content aside';
@@ -124,7 +126,7 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
         }
     }
 
-    @media (min-width: 90rem) {
+    @media (min-width: 85rem) {
         .article-layout {
             grid-template-columns: minmax(0, var(--sidebar-width)) var(--article-max-width) var(--sidebar-width);
             grid-template-areas: '. header aside' '. content aside';
