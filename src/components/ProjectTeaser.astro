@@ -1,14 +1,13 @@
 ---
 import { type CollectionEntry } from 'astro:content';
-import { getEntries } from 'astro:content';
+// import { getEntries } from 'astro:content';
 
 interface Props {
     project: CollectionEntry<'projects'>;
 }
 
 const { project } = Astro.props;
-const repos = await getEntries(project.data.repositories);
-console.log(repos.map(r => r.data.github));
+// const repos = await getEntries(project.data.repositories);
 ---
 
 <h2>{project.data.title}</h2>
