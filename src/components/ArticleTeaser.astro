@@ -6,9 +6,9 @@ interface Props {
 }
 
 const { article } = Astro.props;
-const headlineId = `article-${article.slug}-headline`;
+const headlineId = `article-${article.id}-headline`;
 ---
 
 <h2 id={headlineId}>{article.data.title}</h2>
 
-<a aria-labelledby={headlineId} href={`/articles/${article.slug}`}>Read article</a>
+<a aria-labelledby={headlineId} href={`/articles/${article.id}`}>Read article</a>

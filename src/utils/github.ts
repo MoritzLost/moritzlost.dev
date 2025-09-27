@@ -1,4 +1,4 @@
-import { Octokit } from "octokit";
+import { Octokit } from 'octokit';
 
 export const fetchGitHubRepository = async (repository: string) => {
     const octokit = new Octokit({
@@ -11,4 +11,4 @@ export const fetchGitHubRepository = async (repository: string) => {
         repo,
     });
     return data;
-}
+};

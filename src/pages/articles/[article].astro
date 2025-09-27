@@ -1,11 +1,11 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import ArticleContent from '@components/ArticleContent.astro';
 import TableOfContents from '@components/TableOfContents.astro';
 import Emoji from '@components/Emoji.astro';
 import Time from '@components/Time.astro';
 import { sortArticlesByDatePrefix } from '@utils/sort-content';
+import { render } from 'astro:content';
 
 interface Props {
     article: CollectionEntry<'articles'>;
@@ -16,17 +16,17 @@ export async function getStaticPaths() {
     const articles = await getCollection('articles');
     const articlesSorted = sortArticlesByDatePrefix(articles);
     return articles.map(article => ({
-        params: { article: article.slug },
+        params: { article: article.id },
         props: { article, articles: articlesSorted },
     }));
 }
 
-const { article, articles } = Astro.props;
-const { Content, headings, remarkPluginFrontmatter } = await article.render();
+// const { article, articles } = Astro.props;
+const { article } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await render(article);
 
-const markdownPath = `src/content/${article.collection}/${article.id}`;
-const fileHistoryUrl = `https://github.com/MoritzLost/moritzlost.de/commits/main/${markdownPath}`;
-const editUrl = `https://github.com/MoritzLost/moritzlost.de/edit/main/${markdownPath}`;
+const fileHistoryUrl = `https://github.com/MoritzLost/moritzlost.de/commits/main/${article.filePath}`;
+const editUrl = `https://github.com/MoritzLost/moritzlost.de/edit/main/${article.filePath}`;
 
 const publishedDate = new Date(remarkPluginFrontmatter.publishedDate);
 const hasRevisionHistory = remarkPluginFrontmatter.revisionHistory.length > 1;
@@ -35,20 +35,23 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
 
 <BaseLayout title={article.data.title}>
     <div class="article-layout">
-        <aside>
+        <div class="article-layout__header">
+            <h1>{article.data.title}</h1>
+            <p class="subline-author">
+                — by Moritz L'Hoest
+                <span class="subline-divider" aria-hidden="true">·</span>
+                <Time date={publishedDate} />
+            </p>
+        </div>
+
+        <aside class="article-layout__aside">
             <TableOfContents {headings} />
         </aside>
 
-        <ArticleContent>
-            <h1>{article.data.title}</h1>
-            <p class="subline-author">
-                — by Moritz L'Hoest <span class="subline-divider">·</span>
-                <Time date={publishedDate} />
-            </p>
-
+        <div class="article-layout__content stack">
             <Content />
 
-            <footer class="article-footer">
+            <footer class="article-footer stack">
                 <hr />
                 {
                     article.data.disclaimerNoAI && (
@@ -77,7 +80,7 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
                     <span><Emoji emoji="💡" /> <a href={editUrl}>Suggest an edit</a></span>
                 </p>
             </footer>
-        </ArticleContent>
+        </div>
     </div>
 </BaseLayout>
 
@@ -88,13 +91,17 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
         row-gap: 3rem;
         justify-content: center;
         grid-template-columns: minmax(0, 45rem);
-        grid-template-areas: 'toc' 'content';
+        grid-template-areas: 'header' 'aside' 'content';
 
-        > aside {
-            grid-area: toc;
+        > .article-layout__header {
+            grid-area: header;
         }
 
-        > :global(article) {
+        > .article-layout__aside {
+            grid-area: aside;
+        }
+
+        > .article-layout__content {
             grid-area: content;
         }
     }
@@ -102,13 +109,14 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
     @media (min-width: 65rem) {
         .article-layout {
             grid-template-columns: minmax(35rem, 45rem) 20rem;
-            grid-template-areas: 'content toc';
+            grid-template-areas: 'header aside' 'content aside';
 
-            > aside {
-                align-self: start;
-                position: sticky;
-                top: 3rem;
-            }
+        }
+
+        .article-layout__aside {
+            align-self: start;
+            position: sticky;
+            top: 3rem;
         }
     }
 
@@ -126,9 +134,6 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
     .article-footer {
         margin-top: 5rem;
         font-size: var(--font-size-sm);
-        > * + * {
-            margin-top: 1.5rem;
-        }
     }
 
     .no-ai-disclaimer {

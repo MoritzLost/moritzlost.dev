@@ -1,12 +1,14 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import { publishedDate, revisionHistory } from './src/utils/content-frontmatter';
-import { loadEnv } from 'vite';
-
-const { SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), '');
 
 export default defineConfig({
-    site: SITE_URL,
+    site: 'https://moritzlost.de',
     markdown: {
-        remarkPlugins: [revisionHistory, publishedDate],
+        remarkPlugins: [publishedDate, revisionHistory],
+    },
+    env: {
+        schema: {
+            GITHUB_ACCESS_TOKEN: envField.string({ context: 'server', access: 'secret' }),
+        },
     },
 });

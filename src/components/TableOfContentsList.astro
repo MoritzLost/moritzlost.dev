@@ -8,33 +8,38 @@ interface Props {
 const { hierarchy } = Astro.props;
 ---
 
-{
-    hierarchy.length > 0 && (
-        <ul class="toc-list">
-            {hierarchy.map(item => (
-                <li class="toc-list__item">
-                    <a href={`#${item.heading.slug}`}>{item.heading.text}</a>
-                    <Astro.self hierarchy={item.children} />
-                </li>
-            ))}
-        </ul>
-    )
-}
+<ul class="toc-list">
+    {
+        hierarchy.map(item => (
+            <li class="toc-list__item">
+                <a class="toc-list__link" href={`#${item.heading.slug}`}>
+                    {item.heading.text}
+                </a>
+                <Astro.self hierarchy={item.children} />
+            </li>
+        ))
+    }
+</ul>
 
 <style lang="postcss">
     .toc-list {
         font-size: var(--font-size-sm);
-        --stack-gap: 0.75rem;
+        --stack-gap: 0.5rem;
         .toc-list {
             margin-top: var(--stack-gap);
             padding-left: 1.5rem;
         }
     }
 
-    .toc-list__item {
-        --link-text-decoration: none;
-        & + & {
-            padding-top: var(--stack-gap);
-        }
+    .toc-list__item + .toc-list__item {
+        margin-top: var(--stack-gap);
+    }
+
+    .toc-list__link {
+        text-decoration-skip-ink: auto;
+        text-decoration-skip: edges;
+        text-decoration-thickness: 0.075em;
+        text-underline-offset: 0.5em;
+        text-decoration-line: var(--link-text-decoration);
     }
 </style>

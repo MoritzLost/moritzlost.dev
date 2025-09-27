@@ -1,8 +1,5 @@
 ---
-import '@styles/fontfaces.css';
-import '@styles/1-variables.css';
-import '@styles/2-reset.css';
-import '@styles/3-base.css';
+import '@styles/main.css';
 
 interface Props {
     title: string;
@@ -15,13 +12,13 @@ const { title, description } = Astro.props;
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-        <meta name="generator" content={Astro.generator}>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
 
         <title>{title}</title>
-        <meta name="description" content={description}>
+        <meta name="description" content={description} />
     </head>
     <body>
         <slot />

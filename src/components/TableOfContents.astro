@@ -12,50 +12,14 @@ const { headings } = Astro.props;
 const hierarchy = createHeadingsHierarchy(headings);
 ---
 
-<nav aria-label="Table of Contents">
-    <button aria-controls="toc-wrapper" aria-expanded="false"> Table of Contents ↓</button>
-    <div id="toc-wrapper"><TableOfContentsList {hierarchy} /></div>
+<nav aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Table of Contents</h2>
+    <TableOfContentsList {hierarchy} />
 </nav>
 
 <style>
-    nav {
-        & > :global(* + *) {
-            margin-top: 1rem;
-        }
-    }
-
-    button {
-        all: unset;
-        outline: revert;
-        outline: revert;
-        cursor: pointer;
-
-        text-decoration: var(--link-text-decoration);
-        text-decoration-skip-ink: auto;
-        text-decoration-skip: edges;
-        text-decoration-thickness: 0.075em;
-        text-underline-offset: 0.25em;
-        text-decoration-line: var(--link-text-decoration);
-        color: var(--link-color);
-        &:hover,
-        &:focus {
-            color: var(--link-hover-color);
-            text-decoration-line: var(--link-hover-text-decoration);
-        }
+    h2 {
+        margin-bottom: 1rem;
+        font-size: var(--font-size-base);
     }
 </style>
-
-<script>
-    const button = document.querySelector('[aria-controls="toc-wrapper"]')!;
-    const toc = document.getElementById(button.getAttribute('aria-controls')!)!;
-    button.addEventListener('click', () => {
-        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-        if (isExpanded) {
-            button.setAttribute('aria-expanded', 'false');
-            toc.hidden = true;
-        } else {
-            button.setAttribute('aria-expanded', 'true');
-            toc.hidden = false;
-        }
-    });
-</script>

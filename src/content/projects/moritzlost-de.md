@@ -1,5 +1,5 @@
 ---
 title: moritzlost.de
 repositories:
-    - moritzlost-de
+    - MoritzLost/moritzlost.de
 ---

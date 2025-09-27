@@ -1,12 +1,14 @@
 ---
-import { getEntries, type CollectionEntry } from 'astro:content'
+import { type CollectionEntry } from 'astro:content';
+import { getEntries } from 'astro:content';
 
 interface Props {
-    project: CollectionEntry<'projects'>
+    project: CollectionEntry<'projects'>;
 }
 
 const { project } = Astro.props;
-const repos = await getEntries(project.data.repositories)
+const repos = await getEntries(project.data.repositories);
+console.log(repos.map(r => r.data.github));
 ---
 
 <h2>{project.data.title}</h2>
@@ -14,7 +16,7 @@ const repos = await getEntries(project.data.repositories)
 <p>Repositories:</p>
 
 <ul>
-    {repos.map(repo =>
+    <!-- {repos.map(repo =>
         <li>
             <p>{repo.data.github.description}</p>
             <p>url: {repo.data.github.url}</p>
@@ -29,5 +31,5 @@ const repos = await getEntries(project.data.repositories)
             <p>license: {JSON.stringify(repo.data.github.license, null, 4)}</p>
             <p>topics: {repo.data.github.topics ? repo.data.github.topics.join(', ') : ''}</p>
         </li>
-    )}
+    )} -->
 </ul>
