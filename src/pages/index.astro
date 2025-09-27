@@ -13,25 +13,47 @@ const articlesSorted = sortArticlesByDatePrefix(articles);
 ---
 
 <BaseLayout title="Moritz L'Hoest – Web Developer">
-    <Section id="about-me" aria-labelledby="about-me-headline">
-        <h1 id="about-me-headline">Hi <Emoji emoji="👋" /></h1>
-    </Section>
+    <section id="about-me">
+        <h1 slot="heading" id="about-me-headline">About me <Emoji emoji="👋" /></h1>
+    </section>
 
-    <Section id="projects" headline="Projects" headlineId="projects-headline">
+    <section id="projects" aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects</h2>
         {projects.map(project => <ProjectTeaser {project} />)}
-    </Section>
+    </section>
 
-    <Section id="articles" headline="Articles" headlineId="aricles-headline">
+    <section id="articles" aria-labelledby="articles-heading">
+        <h2 id="articles-heading">Articles</h2>
         {articlesSorted.map(article => <ArticleTeaser {article} />)}
-    </Section>
+    </section>
 </BaseLayout>
 
-<style lang="postcss">
-    :global(main > section + section) {
+<style>
+    section {
+        width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-areas: '. content .';
+
+        grid-template-columns:
+            [fullwidth-start]
+            var(--container-padding-x)
+            [content-start]
+            minmax(0, 75ch)
+            [content-end]
+            var(--container-padding-x)
+            [fullwidth-end];
+    }
+
+    section > :global(*) {
+        grid-column: content-start / content-end;
+    }
+
+    section + section {
         margin-top: clamp(3rem, 5vw, 8rem);
     }
 
-    :global(section > *){
-        max-width: 65rem;
-    }
+    /* :global(main > section > *){
+        max-width: 65ch;
+    } */
 </style>

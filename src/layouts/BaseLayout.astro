@@ -1,6 +1,6 @@
 ---
 import Html from './Html.astro';
-import Navigation from './Navigation.astro';
+import Navigation from '../components/Navigation.astro';
 
 interface Props {
     title: string;
@@ -11,22 +11,16 @@ const { title, description } = Astro.props;
 ---
 
 <Html {title} {description}>
-    <div class="page-layout">
-        <Navigation />
-        <main id="main">
-            <slot />
-        </main>
-    </div>
+    <Navigation />
+    <main id="main">
+        <slot />
+    </main>
 </Html>
 
-<style>
-    .page-layout {
+<style is:global>
+    body {
         display: grid;
         gap: clamp(3rem, 5vw, 8rem);
         padding-bottom: 3rem;
-    }
-
-    main {
-        margin-inline: clamp(1.5rem, 3vw, 3rem);
     }
 </style>
