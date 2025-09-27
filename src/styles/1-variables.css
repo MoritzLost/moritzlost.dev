@@ -6,11 +6,12 @@
     --body-color: #0a0c0d;
     --body-background: #fcfcf2;
 
-    --font-family-base: 'Fira Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans',
-        'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
-    --font-family-mono: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', 'Lucida Console', 'Ubuntu Mono',
-        Menlo, Monaco, Courier, 'Courier New', monospace;
+    --font-family-base:
+        'Fira Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans',
+        Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-family-mono:
+        'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', 'Lucida Console', 'Ubuntu Mono', Menlo, Monaco,
+        Courier, 'Courier New', monospace;
 
     --font-size-xs: 0.875rem;
     --font-size-sm: 1rem;
@@ -22,9 +23,9 @@
     --font-weight-base: 400;
     --font-weight-bold: 600;
 
-    --line-height-sm: 1.2;
-    --line-height-base: 1.6;
-    --line-height-lg: 1.8;
+    --line-height-sm: 1.6;
+    --line-height-base: 1.8;
+    --line-height-lg: 2;
 
     --headings-font-family: 'Vollkorn';
     --headings-line-height: 1.2;

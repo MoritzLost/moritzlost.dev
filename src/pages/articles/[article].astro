@@ -34,9 +34,9 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
 ---
 
 <BaseLayout title={article.data.title}>
-    <div class="article-layout">
+    <section class="article-layout" aria-labelledby="article-heading">
         <div class="article-layout__header">
-            <h1>{article.data.title}</h1>
+            <h1 id="article-heading">{article.data.title}</h1>
             <p class="subline-author">
                 — by Moritz L'Hoest
                 <span class="subline-divider" aria-hidden="true">·</span>
@@ -81,16 +81,20 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
                 </p>
             </footer>
         </div>
-    </div>
+    </section>
 </BaseLayout>
 
 <style lang="postcss">
     .article-layout {
+        --sidebar-width: 20rem;
+        --article-min-width: 45ch;
+        --article-max-width: 65ch;
+
         display: grid;
         column-gap: 5rem;
-        row-gap: 3rem;
+        row-gap: var(--stack-gap-headings);
         justify-content: center;
-        grid-template-columns: minmax(0, 45rem);
+        grid-template-columns: minmax(0, var(--article-max-width));
         grid-template-areas: 'header' 'aside' 'content';
 
         > .article-layout__header {
@@ -106,9 +110,9 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
         }
     }
 
-    @media (min-width: 65rem) {
+    @media (min-width: 75rem) {
         .article-layout {
-            grid-template-columns: minmax(35rem, 45rem) 20rem;
+            grid-template-columns: minmax(var(--article-min-width), var(--article-max-width)) var(--sidebar-width);
             grid-template-areas: 'header aside' 'content aside';
 
         }
@@ -117,6 +121,13 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
             align-self: start;
             position: sticky;
             top: 3rem;
+        }
+    }
+
+    @media (min-width: 90rem) {
+        .article-layout {
+            grid-template-columns: minmax(0, var(--sidebar-width)) var(--article-max-width) var(--sidebar-width);
+            grid-template-areas: '. header aside' '. content aside';
         }
     }
 
