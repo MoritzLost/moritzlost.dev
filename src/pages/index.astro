@@ -1,34 +1,50 @@
 ---
-import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import ProjectTeaser from '@components/ProjectTeaser.astro';
-import ArticleTeaser from '@components/ArticleTeaser.astro';
-import Emoji from '@components/Emoji.astro';
-import { sortArticlesByDatePrefix } from '@utils/sort-content';
 
-const projects = await getCollection('projects');
-const articles = await getCollection('articles');
-const articlesSorted = sortArticlesByDatePrefix(articles);
+import portrait from '../images/portrait.jpg';
 ---
 
 <BaseLayout title="Moritz L’Hoest – Web Developer">
     <section id="about-me">
-        <h1 slot="heading" id="about-me-headline">About me <Emoji emoji="👋" /></h1>
-    </section>
-
-    <section id="projects" aria-labelledby="projects-heading">
-        <h2 id="projects-heading">Projects</h2>
-        {projects.map(project => <ProjectTeaser {project} />)}
-    </section>
-
-    <section id="articles" aria-labelledby="articles-heading">
-        <h2 id="articles-heading">Articles</h2>
-        {articlesSorted.map(article => <ArticleTeaser {article} />)}
+        <div class="about-me">
+            <Picture
+                src={portrait}
+                alt="@TODO: Write alt"
+                width="300"
+                height="300"
+                sizes="min(300px, 100vw)"
+                widths={[300, 600, 900, 1200]}
+                priority
+                formats={['avif', 'webp']}
+                quality="high"
+                class="about-me__image"
+                pictureAttributes={{ class: 'about-me__portrait' }}
+            />
+            <div class="about-me__body stack">
+                <h1 slot="heading" id="about-me-headline">About me</h1>
+                <p>
+                    I'm Moritz L’Hoest, a web developer from Cologne, Germany. At the moment, I like to work with
+                    <a href="https://craftcms.com/">Craft CMS</a> and <a href="https://astro.build/">Astro</a>. My
+                    primary focus besides full stack development is on sustainability, accessibility and data privacy. I
+                    work at
+                    <a href="https://www.schwarzdesign.de/">schwarzdesign</a> as a developer and team lead. When I'm not
+                    at work, I collect and enjoy whisky, mostly scotch. I also like boardgames, reading and cooking.
+                </p>
+                <ul aria-label="Find me on the internet">
+                    <li><a href="https://github.com/MoritzLost">GitHub</a></li>
+                    <li><a href="https://stackexchange.com/users/3818740/moritzlost">Stack Exchange</a></li>
+                    <li><a href="https://www.linkedin.com/in/moritzlost/">LinkedIn</a></li>
+                    <li><a href="https://mehrlicht.photos/">My photography website (mehrlicht.photos)</a></li>
+                </ul>
+            </div>
+        </div>
     </section>
 </BaseLayout>
 
 <style>
     section {
+        container-type: inline-size;
         width: 100%;
         display: grid;
         justify-content: space-between;
@@ -38,7 +54,7 @@ const articlesSorted = sortArticlesByDatePrefix(articles);
             [fullwidth-start]
             var(--container-padding-x)
             [content-start]
-            minmax(0, 75ch)
+            minmax(0, 90ch)
             [content-end]
             var(--container-padding-x)
             [fullwidth-end];
@@ -48,8 +64,34 @@ const articlesSorted = sortArticlesByDatePrefix(articles);
         grid-column: content-start / content-end;
     }
 
-    section + section {
-        margin-top: clamp(3rem, 5vw, 8rem);
+    .about-me {
+        display: grid;
+        gap: var(--stack-gap-headings);
+
+        @container (min-width: calc(240px + 40ch)) {
+            grid-template-columns: 240px 1fr;
+        }
+
+        @container (min-width: calc(300px + 40ch)) {
+            grid-template-columns: 300px 1fr;
+        }
+
+        /* @container (min-width: calc(300px + 40ch)) {
+            grid-template-columns: 300px 1fr;
+        } */
+    }
+
+    .about-me__image {
+        border-radius: 24px;
+    }
+
+    .about-me__body > * + * {
+        margin-top: var(--stack-gap);
+        --stack-gap: 1rem;
+    }
+
+    .about-me__body > h1 + p {
+        --stack-gap: 0.5rem;
     }
 
     /* :global(main > section > *){
