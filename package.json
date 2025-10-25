@@ -1,17 +1,17 @@
 {
-    "name": "moritzlost.de",
+    "name": "moritzlost.dev",
     "type": "module",
     "version": "1.0.0",
-    "homepage": "https://github.com/moritzlost/moritzlost.de",
+    "homepage": "https://github.com/moritzlost/moritzlost.dev",
     "bugs": {
-        "url": "https://github.com/moritzlost/moritzlost.de/issues"
+        "url": "https://github.com/moritzlost/moritzlost.dev/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/moritzlost/moritzlost.de.git"
+        "url": "git+https://github.com/moritzlost/moritzlost.dev.git"
     },
     "license": "UNLICENSED",
-    "author": "Moritz L'Hoest <m@moritz.contact>",
+    "author": "Moritz L'Hoest <m@moritzlost.dev>",
     "scripts": {
         "dev": "astro dev",
         "start": "astro dev",

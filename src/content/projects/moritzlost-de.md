@@ -1,5 +1,5 @@
 ---
-title: moritzlost.de
+title: moritzlost.dev
 repositories:
-    - MoritzLost/moritzlost.de
+    - MoritzLost/moritzlost.dev
 ---

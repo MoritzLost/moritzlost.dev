@@ -25,8 +25,8 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await render(article);
 
-const fileHistoryUrl = `https://github.com/MoritzLost/moritzlost.de/commits/main/${article.filePath}`;
-const editUrl = `https://github.com/MoritzLost/moritzlost.de/edit/main/${article.filePath}`;
+const fileHistoryUrl = `https://github.com/MoritzLost/moritzlost.dev/commits/main/${article.filePath}`;
+const editUrl = `https://github.com/MoritzLost/moritzlost.dev/edit/main/${article.filePath}`;
 
 const publishedDate = new Date(remarkPluginFrontmatter.publishedDate);
 const hasRevisionHistory = remarkPluginFrontmatter.revisionHistory.length > 1;

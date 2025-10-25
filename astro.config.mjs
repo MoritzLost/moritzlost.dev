@@ -2,7 +2,7 @@ import { defineConfig, envField } from 'astro/config';
 import { publishedDate, revisionHistory } from './src/utils/content-frontmatter';
 
 export default defineConfig({
-    site: 'https://moritzlost.de',
+    site: 'https://moritzlost.dev',
     markdown: {
         remarkPlugins: [publishedDate, revisionHistory],
     },
