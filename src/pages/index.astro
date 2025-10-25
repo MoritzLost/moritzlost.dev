@@ -60,7 +60,7 @@ import portrait from '../images/portrait.jpg';
             [fullwidth-end];
     }
 
-    section > :global(*) {
+    section > * {
         grid-column: content-start / content-end;
     }
 
@@ -68,17 +68,9 @@ import portrait from '../images/portrait.jpg';
         display: grid;
         gap: var(--stack-gap-headings);
 
-        @container (min-width: calc(240px + 40ch)) {
-            grid-template-columns: 240px 1fr;
-        }
-
-        @container (min-width: calc(300px + 40ch)) {
+        @container (min-width: calc(300px + 50ch)) {
             grid-template-columns: 300px 1fr;
         }
-
-        /* @container (min-width: calc(300px + 40ch)) {
-            grid-template-columns: 300px 1fr;
-        } */
     }
 
     .about-me__image {
@@ -93,8 +85,4 @@ import portrait from '../images/portrait.jpg';
     .about-me__body > h1 + p {
         --stack-gap: 0.5rem;
     }
-
-    /* :global(main > section > *){
-        max-width: 65ch;
-    } */
 </style>

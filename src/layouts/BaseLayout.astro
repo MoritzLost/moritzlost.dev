@@ -1,6 +1,5 @@
 ---
 import Html from './Html.astro';
-import Navigation from '../components/Navigation.astro';
 
 interface Props {
     title: string;
@@ -20,6 +19,6 @@ const { title, description } = Astro.props;
     body {
         display: grid;
         gap: clamp(3rem, 5vw, 8rem);
-        padding-bottom: 3rem;
+        padding-block: 3rem;
     }
 </style>
