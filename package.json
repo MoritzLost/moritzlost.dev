@@ -11,7 +11,7 @@
         "url": "git+https://github.com/moritzlost/moritzlost.dev.git"
     },
     "license": "UNLICENSED",
-    "author": "Moritz L'Hoest <m@moritzlost.dev>",
+    "author": "Moritz L’Hoest <m@moritzlost.dev>",
     "scripts": {
         "dev": "astro dev",
         "start": "astro dev",
