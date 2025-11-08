@@ -7,6 +7,7 @@ import { getDateFromFilepath } from '@utils/dates';
 
 import portrait from '../images/portrait.jpg';
 import dotAll2023 from '../images/dot-all-2023-square.jpg';
+import Emoji from '@components/Emoji.astro';
 
 const appearances = await getCollection('appearances').then(collection =>
     collection.sort((a, b) => {
@@ -34,7 +35,7 @@ const appearances = await getCollection('appearances').then(collection =>
                 pictureAttributes={{ class: 'about-me__portrait', 'aria-hidden': 'true' }}
             />
             <div class="about-me__body stack">
-                <h1 slot="heading" id="about-me-heading">About me</h1>
+                <h1 slot="heading" id="about-me-heading">Hi, I’m Moritz <Emoji emoji="👋" /></h1>
                 <p>
                     I'm Moritz L’Hoest, a web developer from Cologne, Germany. At the moment, I like to work with
                     <a href="https://craftcms.com/">Craft CMS</a> and <a href="https://astro.build/">Astro</a>. My
