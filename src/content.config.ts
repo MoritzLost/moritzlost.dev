@@ -4,6 +4,16 @@ import { fetchGitHubRepository } from '@utils/github';
 import repositories from './content/repositories.json';
 
 export const collections = {
+    appearances: defineCollection({
+        loader: glob({
+            pattern: '*.md',
+            base: './src/content/appearances',
+            generateId: ({ entry }) => entry.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, ''),
+        }),
+        schema: z.object({
+            title: z.string(),
+        }),
+    }),
     articles: defineCollection({
         loader: glob({
             pattern: '*.md',

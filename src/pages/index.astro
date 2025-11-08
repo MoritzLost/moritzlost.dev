@@ -1,12 +1,24 @@
 ---
+import { render, getCollection } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Time from '@components/Time.astro';
+import { getDateFromFilepath } from '@utils/dates';
 
 import portrait from '../images/portrait.jpg';
+import dotAll2023 from '../images/dot-all-2023-square.jpg';
+
+const appearances = await getCollection('appearances').then(collection =>
+    collection.sort((a, b) => {
+        const dateA = getDateFromFilepath(a.filePath!);
+        const dateB = getDateFromFilepath(b.filePath!);
+        return dateB.getTime() - dateA.getTime();
+    }),
+);
 ---
 
 <BaseLayout title="Moritz L’Hoest – Web Developer">
-    <section id="about-me" aria-labelledby="about-me-headline">
+    <section id="about-me" aria-labelledby="about-me-heading">
         <div class="about-me">
             <Picture
                 src={portrait}
@@ -19,10 +31,10 @@ import portrait from '../images/portrait.jpg';
                 formats={['avif', 'webp']}
                 quality="high"
                 class="about-me__image"
-                pictureAttributes={{ class: 'about-me__portrait' }}
+                pictureAttributes={{ class: 'about-me__portrait', 'aria-hidden': 'true' }}
             />
             <div class="about-me__body stack">
-                <h1 slot="heading" id="about-me-headline">About me</h1>
+                <h1 slot="heading" id="about-me-heading">About me</h1>
                 <p>
                     I'm Moritz L’Hoest, a web developer from Cologne, Germany. At the moment, I like to work with
                     <a href="https://craftcms.com/">Craft CMS</a> and <a href="https://astro.build/">Astro</a>. My
@@ -39,49 +51,123 @@ import portrait from '../images/portrait.jpg';
             </div>
         </div>
     </section>
-</BaseLayout>
 
-<style>
-    section {
-        container-type: inline-size;
-        width: 100%;
-        display: grid;
-        justify-content: space-between;
-        grid-template-areas: '. content .';
+    <section id="talks" aria-labelledby="talks-heading">
+        <h2 id="talks-heading">Tech talks and other appeareances</h2>
 
-        grid-template-columns:
-            [fullwidth-start]
-            var(--container-padding-x)
-            [content-start]
-            minmax(0, 90ch)
-            [content-end]
-            var(--container-padding-x)
-            [fullwidth-end];
-    }
+        <div class="conference-talks">
+            <Picture
+                src={dotAll2023}
+                alt="I’m animatedly giving a talk at Dot All Barcelona"
+                width="600"
+                height="600"
+                sizes="min(600px, 100vw)"
+                widths={[600, 900, 1200, 1800]}
+                formats={['avif', 'webp']}
+                quality="high"
+                priority
+                class="conference-talks__image"
+                pictureAttributes={{ class: 'conference-talks__picture' }}
+            />
 
-    section > * {
-        grid-column: content-start / content-end;
-    }
+            {
+                appearances.map(async appearance => {
+                    const { Content, remarkPluginFrontmatter } = await render(appearance);
+                    const date = new Date(remarkPluginFrontmatter.publishedDate);
+                    return (
+                        <article class="conference-talk" aria-labelledby={`${appearance.id}-heading`}>
+                            <h3 class="conference-talk__heading" id={`${appearance.id}-heading`}>
+                                {appearance.data.title}
+                            </h3>
+                            <p class="conference-talk__date">
+                                <Time date={date} />
+                            </p>
+                            <Content />
+                        </article>
+                    );
+                })
+            }
+        </div>
+    </section>
 
-    .about-me {
-        display: grid;
-        gap: var(--stack-gap-headings);
+    <style>
+        section {
+            container-type: inline-size;
+            width: 100%;
+            display: grid;
+            justify-content: space-between;
+            grid-template-areas: '. content .';
 
-        @container (min-width: calc(300px + 50ch)) {
-            grid-template-columns: 300px 1fr;
+            grid-template-columns:
+                [fullwidth-start]
+                var(--container-padding-x)
+                [content-start]
+                minmax(0, 100ch)
+                [content-end]
+                var(--container-padding-x)
+                [fullwidth-end];
         }
-    }
 
-    .about-me__image {
-        border-radius: 24px;
-    }
+        section > * {
+            grid-column: content-start / content-end;
+        }
 
-    .about-me__body > * + * {
-        margin-top: var(--stack-gap);
-        --stack-gap: 1rem;
-    }
+        section + section {
+            margin-block-start: clamp(3rem, 7vw, 8rem);
+        }
 
-    .about-me__body > h1 + p {
-        --stack-gap: 0.5rem;
-    }
-</style>
+        section > h2 {
+            margin-block-end: clamp(2rem, 3vw, 3rem);
+        }
+
+        .about-me {
+            display: grid;
+            gap: var(--stack-gap-headings);
+
+            @container (min-width: calc(300px + 50ch)) {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        .about-me__image {
+            border-radius: 24px;
+        }
+
+        .about-me__body > * + * {
+            margin-top: var(--stack-gap);
+            --stack-gap: 1rem;
+        }
+
+        .about-me__body > h1 + p {
+            --stack-gap: 0.5rem;
+        }
+
+        .conference-talks {
+            display: grid;
+            grid-auto-flow: dense;
+            column-gap: clamp(2rem, 4vw, 4rem);
+            row-gap: clamp(2rem, 6vw, 6rem);
+            grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
+        }
+
+        .conference-talks__picture {
+            grid-column-start: -2;
+        }
+
+        .conference-talks__image {
+            border-radius: 24px;
+        }
+
+        .conference-talk > :global(* + *) {
+            margin-block-start: var(--stack-gap);
+            --stack-gap: 1rem;
+        }
+
+        .conference-talk__date {
+            --stack-gap: 0rem;
+            font-size: var(--font-size-lg);
+            font-family: var(--headings-font-family);
+            font-weight: var(--headings-font-weight);
+        }
+    </style>
+</BaseLayout>

@@ -1,13 +1,15 @@
 import { execSync } from 'child_process';
+import { getDateFromFilepath } from './dates';
 
 export function publishedDate() {
     return function (_: any, file: any) {
         const filepath = file.history[0];
-        const filename = filepath.split('/').slice(-1)[0];
-        const result = filename.match(/^\d{4}-\d{2}-\d{2}/);
-        if (!result) return;
-
-        file.data.astro.frontmatter.publishedDate = result[0];
+        try {
+            const date = getDateFromFilepath(filepath);
+            file.data.astro.frontmatter.publishedDate = date;
+        } catch {
+            return;
+        }
     };
 }
 
