@@ -95,7 +95,7 @@ ol:not([class]) {
     > li {
         list-style-type: none;
         position: relative;
-        padding-left: 1.75em;
+        padding-left: 1.5em;
         --stack-gap: 0.25em;
 
         &::before {
