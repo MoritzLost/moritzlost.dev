@@ -2,7 +2,7 @@
 title: "Crafting Connections and Collaboration"
 ---
 
-Thomas Sausen interviewed me for his [CraftEntries podcast](https://craftentries.io) about my web dev career so far. We talk about my experiences with various CMS systems, particularly ProcessWire and Craft CMS. I also discuss how community engagement has helped me learn Craft and to grow as a developer.
+Thomas Sausen interviewed me for his [CraftEntries podcast](https://craftentries.io) about my web dev career so far. We talk about my experiences with various content management systems, particularly ProcessWire and Craft CMS. I also discuss how community engagement has helped me learn Craft and to grow as a developer.
 
 Listen to the episode on:
 
