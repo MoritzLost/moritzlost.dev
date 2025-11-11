@@ -13,11 +13,14 @@
         'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', 'Lucida Console', 'Ubuntu Mono', Menlo, Monaco,
         Courier, 'Courier New', monospace;
 
-    --font-size-xs: 0.875rem;
-    --font-size-sm: 1rem;
-    --font-size-base: 1.25rem;
-    --font-size-lg: 1.5rem;
-    --font-size-xl: 1.75rem;
+    /* @link https://utopia.fyi/type/calculator?c=360,20,1.125,1400,20,1.333,5,1 */
+    --font-size--1: clamp(0.9377rem, 1.1711rem + -0.2667vw, 1.1111rem);
+    --font-size-0: clamp(1.25rem, 1.25rem + 0vw, 1.25rem);
+    --font-size-1: clamp(1.4063rem, 1.3163rem + 0.4vw, 1.6663rem);
+    --font-size-2: clamp(1.582rem, 1.3608rem + 0.9832vw, 2.2211rem);
+    --font-size-3: clamp(1.7798rem, 1.371rem + 1.8169vw, 2.9607rem);
+    --font-size-4: clamp(2.0023rem, 1.3292rem + 2.9914vw, 3.9467rem);
+    --font-size-5: clamp(2.2525rem, 1.2112rem + 4.6283vw, 5.2609rem);
 
     --font-weight-light: 300;
     --font-weight-base: 400;
@@ -29,15 +32,14 @@
 
     --headings-font-family: 'Vollkorn';
     --headings-line-height: 1.2;
-    --headings-font-weight: 600;
     --headings-font-style: normal;
 
-    --h1-font-size: 3.25rem;
-    --h2-font-size: 2.5rem;
-    --h3-font-size: 2rem;
-    --h4-font-size: 1.5rem;
-    --h5-font-size: 1.25rem;
-    --h6-font-size: 1rem;
+    --h1-font-size: var(--font-size-4);
+    --h2-font-size: var(--font-size-3);
+    --h3-font-size: var(--font-size-2);
+    --h4-font-size: var(--font-size-1);
+    --h5-font-size: var(--font-size-0);
+    --h6-font-size: var(--font-size--1);
 
     --link-color: var(--primary);
     --link-text-decoration: underline;

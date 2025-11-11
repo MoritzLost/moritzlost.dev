@@ -6,7 +6,7 @@ body {
     color: var(--body-color);
     background: var(--body-background);
     font-family: var(--font-family-base);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-0);
     font-weight: var(--font-weight-base);
     line-height: var(--line-height-base);
     accent-color: var(--primary);
@@ -20,32 +20,37 @@ h5,
 h6 {
     font-family: var(--headings-font-family);
     line-height: var(--headings-line-height);
-    font-weight: var(--headings-font-weight);
     font-style: var(--headings-font-style);
 }
 
 h1 {
     font-size: var(--h1-font-size);
+    font-weight: 700;
 }
 
 h2 {
     font-size: var(--h2-font-size);
+    font-weight: 600;
 }
 
 h3 {
     font-size: var(--h3-font-size);
+    font-weight: 500;
 }
 
 h4 {
     font-size: var(--h4-font-size);
+    font-weight: 500;
 }
 
 h5 {
     font-size: var(--h5-font-size);
+    font-weight: 500;
 }
 
 h6 {
     font-size: var(--h6-font-size);
+    font-weight: 500;
 }
 
 a {
