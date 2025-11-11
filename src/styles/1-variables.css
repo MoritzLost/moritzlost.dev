@@ -1,6 +1,5 @@
 :root {
     --primary: #33607c;
-    --muted: #292f33;
     --border-color: #bbb;
 
     --body-color: #0a0c0d;
@@ -26,13 +25,7 @@
     --font-weight-base: 400;
     --font-weight-bold: 600;
 
-    --line-height-sm: 1.6;
-    --line-height-base: 1.8;
-    --line-height-lg: 2;
-
     --headings-font-family: 'Vollkorn';
-    --headings-line-height: 1.2;
-    --headings-font-style: normal;
 
     --h1-font-size: var(--font-size-4);
     --h2-font-size: var(--font-size-3);
