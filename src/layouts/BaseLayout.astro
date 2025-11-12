@@ -1,15 +1,11 @@
 ---
 import Html from './Html.astro';
+import type { Props as SeoProps } from './Html.astro';
 
-interface Props {
-    title: string;
-    description?: string;
-}
-
-const { title, description } = Astro.props;
+interface Props extends SeoProps {}
 ---
 
-<Html {title} {description}>
+<Html {...Astro.props}>
     <main id="main">
         <slot />
     </main>

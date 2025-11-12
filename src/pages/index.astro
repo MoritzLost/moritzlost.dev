@@ -6,7 +6,8 @@ import Time from '@components/Time.astro';
 import { getDateFromFilepath } from '@utils/dates';
 
 import portrait from '../images/portrait.jpg';
-import dotAll2023 from '../images/dot-all-2023-square.jpg';
+import dotAll2023 from '../images/dot-all-2023.jpg';
+import dotAll2023Square from '../images/dot-all-2023-square.jpg';
 import Emoji from '@components/Emoji.astro';
 
 const appearances = await getCollection('appearances').then(collection =>
@@ -18,7 +19,12 @@ const appearances = await getCollection('appearances').then(collection =>
 );
 ---
 
-<BaseLayout title="Moritz L’Hoest – Web Developer">
+<BaseLayout
+    title="Moritz L’Hoest – Web Developer"
+    image={dotAll2023}
+    imageAlternativeText="Moritz L’Hoest giving a talk on a conference stage."
+    description="Moritz L’Hoest, web developer from Cologne, Germany. I care about sustainability, accessibility, and data privacy."
+>
     <section id="about-me" aria-labelledby="about-me-heading">
         <div class="about-me">
             <Picture
@@ -58,8 +64,8 @@ const appearances = await getCollection('appearances').then(collection =>
         <h2 id="talks-heading">Tech talks and other appearances</h2>
         <div class="conference-talks">
             <Picture
-                src={dotAll2023}
-                alt="I’m animatedly giving a talk at Dot All Barcelona"
+                src={dotAll2023Square}
+                alt="I’m animatedly giving a talk on a conference stage."
                 width="600"
                 height="600"
                 sizes="min(600px, 100vw)"

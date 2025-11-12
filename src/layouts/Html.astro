@@ -1,12 +1,18 @@
 ---
+import type { ImageMetadata } from 'astro';
 import '@styles/main.css';
+import { getImage } from 'astro:assets';
 
-interface Props {
+export interface Props {
     title: string;
     description?: string;
+    image?: ImageMetadata;
+    imageAlternativeText?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image, imageAlternativeText } = Astro.props;
+
+const seoImage = image ? await getImage({ src: image, width: 1600, quality: 'high' }) : null;
 ---
 
 <!doctype html>
@@ -18,7 +24,11 @@ const { title, description } = Astro.props;
         <meta name="generator" content={Astro.generator} />
 
         <title>{title}</title>
-        <meta name="description" content={description} />
+        {description && <meta name="description" content={description} />}
+        {seoImage && <meta property="og:image" content={seoImage.src} />}
+        {seoImage && <meta property="og:image:width" content={String(seoImage.attributes.width)} />}
+        {seoImage && <meta property="og:image:height" content={String(seoImage.attributes.height)} />}
+        {seoImage && imageAlternativeText && <meta property="og:image:alt" content={imageAlternativeText} />}
     </head>
     <body>
         <slot />
