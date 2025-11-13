@@ -1,9 +1,19 @@
 :root {
-    --primary: #33607c;
+    --blue-light: #99ccee;
+    --blue: #33607c;
+    --blue-dark: #003f5c;
+
+    --theme-color: light-dark(var(--blue), var(--blue-light));
     --border-color: #bbb;
 
-    --body-color: #0a0c0d;
-    --body-background: #fcfcf2;
+    --light-theme-background: #fcfcf2;
+    --light-theme-foreground: #0a0c0d;
+
+    --dark-theme-background: #171313;
+    --dark-theme-foreground: #eee;
+
+    --body-foreground: light-dark(var(--light-theme-foreground), var(--dark-theme-foreground));
+    --body-background: light-dark(var(--light-theme-background), var(--dark-theme-background));
 
     --font-family-base:
         'Fira Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans',
@@ -34,10 +44,8 @@
     --h5-font-size: var(--font-size-0);
     --h6-font-size: var(--font-size--1);
 
-    --link-color: var(--primary);
-    --link-text-decoration: underline;
-    --link-hover-color: var(--primary-dark);
-    --link-hover-text-decoration: underline;
+    --link-color: light-dark(var(--theme-color, var(--dark-theme-background)));
+    --link-hover-color: var(--theme-color-dark);
 
     --stack-gap: 1.5rem;
     --stack-gap-headings: clamp(2rem, 6vw, 3rem);
