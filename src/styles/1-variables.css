@@ -44,7 +44,7 @@
     --h5-font-size: var(--font-size-0);
     --h6-font-size: var(--font-size--1);
 
-    --link-color: light-dark(var(--theme-color, var(--dark-theme-background)));
+    --link-color: light-dark(var(--theme-color), var(--dark-theme-foreground));
     --link-hover-color: var(--theme-color-dark);
 
     --stack-gap: 1.5rem;
