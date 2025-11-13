@@ -45,7 +45,7 @@
     --h6-font-size: var(--font-size--1);
 
     --link-color: light-dark(var(--theme-color), var(--dark-theme-foreground));
-    --link-hover-color: var(--theme-color-dark);
+    --link-hover-color: light-dark(var(--blue-dark), var(--blue-light));
 
     --stack-gap: 1.5rem;
     --stack-gap-headings: clamp(2rem, 6vw, 3rem);
