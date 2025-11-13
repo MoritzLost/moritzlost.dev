@@ -9,12 +9,38 @@ interface Props extends SeoProps {}
     <main id="main">
         <slot />
     </main>
+
+    <footer id="footer" aria-labelledby="contact">
+        <h2 class="visually-hidden" id="contact">Contact links</h2>
+        <ul class="contact-links" aria-label="Find me on the internet">
+            <li><a href="https://github.com/MoritzLost">GitHub</a></li>
+            <li><a href="https://stackexchange.com/users/3818740/moritzlost">Stack Exchange</a></li>
+            <li><a href="https://www.linkedin.com/in/moritzlost/">LinkedIn</a></li>
+        </ul>
+    </footer>
 </Html>
 
 <style is:global>
     body {
         display: grid;
         gap: clamp(3rem, 6vw, 6rem);
-        margin-block: clamp(1.5rem, 6vw, 6rem);
+    }
+
+    main {
+        margin-block-start: clamp(1.5rem, 6vw, 6rem);
+    }
+
+    footer {
+        margin-block-end: clamp(1.5rem, 3vw, 3rem);
+        padding-inline: var(--container-padding-x);
+    }
+
+    .contact-links {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        column-gap: 2rem;
+        row-gap: 1rem;
+        font-size: var(--font-size--1);
     }
 </style>
