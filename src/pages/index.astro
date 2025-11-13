@@ -96,85 +96,85 @@ const appearances = await getCollection('appearances').then(collection =>
             }
         </div>
     </section>
-
-    <style>
-        section {
-            container-type: inline-size;
-            width: 100%;
-            display: grid;
-            justify-content: space-between;
-            grid-template-areas: '. content .';
-
-            grid-template-columns:
-                [fullwidth-start]
-                var(--container-padding-x)
-                [content-start]
-                minmax(0, 100ch)
-                [content-end]
-                var(--container-padding-x)
-                [fullwidth-end];
-        }
-
-        section > * {
-            grid-column: content-start / content-end;
-        }
-
-        section + section {
-            margin-block-start: clamp(3rem, 7vw, 8rem);
-        }
-
-        section > h2 {
-            margin-block-end: clamp(2rem, 3vw, 3rem);
-        }
-
-        .about-me {
-            display: grid;
-            gap: var(--stack-gap-headings);
-
-            @container (min-width: calc(300px + 50ch)) {
-                grid-template-columns: 300px 1fr;
-            }
-        }
-
-        .about-me__image {
-            border-radius: 24px;
-        }
-
-        .about-me__body > * + * {
-            margin-top: var(--stack-gap);
-            --stack-gap: 1rem;
-        }
-
-        .about-me__body > h1 + p {
-            --stack-gap: 0.5rem;
-        }
-
-        .conference-talks {
-            display: grid;
-            grid-auto-flow: dense;
-            column-gap: clamp(2rem, 4vw, 4rem);
-            row-gap: clamp(2rem, 6vw, 6rem);
-            grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
-        }
-
-        .conference-talks__picture {
-            grid-column-start: -2;
-        }
-
-        .conference-talks__image {
-            border-radius: 24px;
-        }
-
-        .conference-talk > :global(* + *) {
-            margin-block-start: var(--stack-gap);
-            --stack-gap: 1rem;
-        }
-
-        .conference-talk__date {
-            --stack-gap: 0rem;
-            font-size: var(--font-size-1);
-            font-family: var(--headings-font-family);
-            font-weight: 500;
-        }
-    </style>
 </BaseLayout>
+
+<style>
+    section {
+        container-type: inline-size;
+        width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-areas: '. content .';
+
+        grid-template-columns:
+            [fullwidth-start]
+            var(--container-padding-x)
+            [content-start]
+            minmax(0, 100ch)
+            [content-end]
+            var(--container-padding-x)
+            [fullwidth-end];
+    }
+
+    section > * {
+        grid-column: content-start / content-end;
+    }
+
+    section + section {
+        margin-block-start: clamp(3rem, 7vw, 8rem);
+    }
+
+    section > h2 {
+        margin-block-end: clamp(2rem, 3vw, 3rem);
+    }
+
+    .about-me {
+        display: grid;
+        gap: var(--stack-gap-headings);
+
+        @container (min-width: calc(300px + 50ch)) {
+            grid-template-columns: 300px 1fr;
+        }
+    }
+
+    .about-me__image {
+        border-radius: 24px;
+    }
+
+    .about-me__body > * + * {
+        margin-top: var(--stack-gap);
+        --stack-gap: 1rem;
+    }
+
+    .about-me__body > h1 + p {
+        --stack-gap: 0.5rem;
+    }
+
+    .conference-talks {
+        display: grid;
+        grid-auto-flow: dense;
+        column-gap: clamp(2rem, 4vw, 4rem);
+        row-gap: clamp(2rem, 6vw, 6rem);
+        grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
+    }
+
+    .conference-talks__picture {
+        grid-column-start: -2;
+    }
+
+    .conference-talks__image {
+        border-radius: 24px;
+    }
+
+    .conference-talk > :global(* + *) {
+        margin-block-start: var(--stack-gap);
+        --stack-gap: 1rem;
+    }
+
+    .conference-talk__date {
+        --stack-gap: 0rem;
+        font-size: var(--font-size-1);
+        font-family: var(--headings-font-family);
+        font-weight: 500;
+    }
+</style>
