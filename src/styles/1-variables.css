@@ -21,8 +21,7 @@
     --font-family-mono:
         'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', 'Lucida Console', 'Ubuntu Mono', Menlo, Monaco,
         Courier, 'Courier New', monospace;
-    --headings-font-family:
-        'Vollkorn', 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    --headings-font-family: 'Vollkorn', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
 
     /* @link https://utopia.fyi/type/calculator?c=360,20,1.125,1400,20,1.333,5,1 */
     --font-size--1: clamp(0.9377rem, 1.1711rem + -0.2667vw, 1.1111rem);
