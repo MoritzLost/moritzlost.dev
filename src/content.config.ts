@@ -2,6 +2,9 @@ import { z, defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { fetchGitHubRepository } from '@utils/github';
 import repositories from './content/repositories.json';
+import type { Octokit } from 'octokit';
+
+type RepositoryData = Awaited<ReturnType<Octokit['rest']['repos']['get']>>['data'];
 
 export const collections = {
     appearances: defineCollection({
@@ -26,8 +29,10 @@ export const collections = {
         loader: glob({ pattern: '*.md', base: './src/content/projects' }),
         schema: z.object({
             title: z.string(),
-            tags: z.array(z.string()).default([]),
+            tags: z.array(z.string()),
             repositories: z.array(reference('repositories')),
+            website: z.string().url().optional(),
+            order: z.number(),
         }),
     }),
     repositories: defineCollection({
@@ -39,5 +44,10 @@ export const collections = {
                 github: github[i],
             }));
         },
+        schema: z.object({
+            github: z.custom<RepositoryData>(val => {
+                return val !== null && typeof val === 'object';
+            }),
+        }),
     }),
 };

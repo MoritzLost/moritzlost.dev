@@ -1,0 +1,10 @@
+{
+    "Astro": "A modern static site builder and progressive web framework that ships zero JavaScript by default and supports interactive islands.",
+    "Eleventy": "A static site generator that works with multiple template languages and doesn't require a JavaScript framework.",
+    "HTML": "HyperText Markup Language.",
+    "JavaScript": "The programming language of the web.",
+    "Netlify": "A hosting platform for the JAMstack.",
+    "PHP": "A popular general-purpose scripting language, commonly used for content management systems.",
+    "ProcessWire": "An open source content management system written in PHP.",
+    "SSG": "Static Site Generator."
+}

@@ -31,6 +31,7 @@ const seoImage = image ? await getImage({ src: image, width: 1600, quality: 'hig
         {seoImage && <meta property="og:image:height" content={String(seoImage.attributes.height)} />}
         {seoImage && imageAlternativeText && <meta property="og:image:alt" content={imageAlternativeText} />}
     </head>
+
     <body>
         <slot />
     </body>

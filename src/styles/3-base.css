@@ -13,42 +13,48 @@ body {
     accent-color: var(--theme-color);
 }
 
-h1 {
+h1,
+.h1 {
     font-family: var(--headings-font-family);
     font-size: var(--h1-font-size);
     font-weight: 700;
     line-height: 1.2;
 }
 
-h2 {
+h2,
+.h2 {
     font-family: var(--headings-font-family);
     font-size: var(--h2-font-size);
     font-weight: 600;
     line-height: 1.4;
 }
 
-h3 {
+h3,
+.h3 {
     font-family: var(--headings-font-family);
     font-size: var(--h3-font-size);
     font-weight: 600;
     line-height: 1.4;
 }
 
-h4 {
+h4,
+.h4 {
     font-family: var(--headings-font-family);
     font-size: var(--h4-font-size);
     font-weight: 500;
     line-height: 1.6;
 }
 
-h5 {
+h5,
+.h5 {
     font-family: var(--headings-font-family);
     font-size: var(--h5-font-size);
     font-weight: 500;
     line-height: 1.6;
 }
 
-h6 {
+h6,
+.h6 {
     font-family: var(--headings-font-family);
     font-size: var(--h6-font-size);
     font-weight: 500;
@@ -107,7 +113,8 @@ sub {
 }
 
 ul:not([class]),
-ol:not([class]) {
+ol:not([class]),
+.unstyled-list {
     list-style-type: none;
     padding: 0;
 
@@ -115,7 +122,7 @@ ol:not([class]) {
         list-style-type: none;
         position: relative;
         padding-left: 1.5em;
-        --stack-gap: 0.25em;
+        --stack-gap: 0.75em;
 
         &::before {
             position: absolute;
@@ -135,15 +142,17 @@ ol:not([class]) {
     }
 }
 
-ul:not([class]) {
+ul:not([class]),
+ul.unstyled-list {
     > li {
         &::before {
-            content: '→';
+            content: var(--list-icon, '→');
         }
     }
 }
 
-ol:not([class]) {
+ol:not([class]),
+ol.unstyled-list {
     counter-reset: steps;
 
     > li {

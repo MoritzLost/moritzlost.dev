@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProjectTeaser from '@components/ProjectTeaser.astro';
+
+const projects = await getCollection('projects');
+const projectsSorted = projects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Projects">
+    <section id="projects" aria-labelledby="projects-heading">
+        <h1 id="projects-heading">My projects</h1>
+        <div class="projects">
+            {projectsSorted.map(project => <ProjectTeaser {project} />)}
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    section {
+        container-type: inline-size;
+        width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-areas: '. content .';
+
+        grid-template-columns:
+            [fullwidth-start]
+            var(--container-padding-x)
+            [content-start]
+            minmax(0, 100ch)
+            [content-end]
+            var(--container-padding-x)
+            [fullwidth-end];
+    }
+
+    section > * {
+        grid-column: content-start / content-end;
+    }
+
+    h1 {
+        margin-block-end: clamp(2rem, 3vw, 3rem);
+    }
+
+    .projects {
+        display: grid;
+        column-gap: clamp(2rem, 4vw, 4rem);
+        row-gap: clamp(3rem, 6vw, 8rem);
+        grid-template-columns: repeat(auto-fit, minmax(min(40ch, 100%), 1fr));
+    }
+</style>

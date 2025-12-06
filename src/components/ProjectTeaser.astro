@@ -1,34 +1,72 @@
 ---
-import { type CollectionEntry } from 'astro:content';
-// import { getEntries } from 'astro:content';
+import { getEntries, render, type CollectionEntry } from 'astro:content';
+import Tags from './Tags.astro';
+import Time from './Time.astro';
 
 interface Props {
     project: CollectionEntry<'projects'>;
 }
 
 const { project } = Astro.props;
-// const repos = await getEntries(project.data.repositories);
+const { Content } = await render(project);
+const repos = await getEntries(project.data.repositories);
+const lastPush = repos.map(repo => new Date(repo.data.github.pushed_at)).sort((a, b) => b.getTime() - a.getTime())[0];
 ---
 
-<h2>{project.data.title}</h2>
+<article aria-labelledby={project.id} class="project stack">
+    <h2 id={project.id}>
+        {project.data.title}
+    </h2>
 
-<p>Repositories:</p>
+    <p class="last-update">
+        Last update: <Time date={lastPush} />
+    </p>
 
-<ul>
-    <!-- {repos.map(repo =>
-        <li>
-            <p>{repo.data.github.description}</p>
-            <p>url: {repo.data.github.url}</p>
-            <p>private: {repo.data.github.private ? 'True' : 'False'}</p>
-            <p>created_at: {repo.data.github.created_at}</p>
-            <p>updated_at: {repo.data.github.updated_at}</p>
-            <p>pushed_at: {repo.data.github.pushed_at}</p>
-            <p>subscribers_count: {repo.data.github.subscribers_count}</p>
-            <p>stargazers_count: {repo.data.github.stargazers_count}</p>
-            <p>watchers: {repo.data.github.watchers}</p>
-            <p>language: {repo.data.github.language}</p>
-            <p>license: {JSON.stringify(repo.data.github.license, null, 4)}</p>
-            <p>topics: {repo.data.github.topics ? repo.data.github.topics.join(', ') : ''}</p>
-        </li>
-    )} -->
-</ul>
+    <Content />
+
+    <ul>
+        {
+            project.data.website && (
+                <li>
+                    <a href={project.data.website}>
+                        {new URL(project.data.website).hostname}
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                </li>
+            )
+        }
+        {
+            repos.map(repo => (
+                <li>
+                    {repo.data.github.private ? (
+                        repo.data.github.full_name
+                    ) : (
+                        <a href={repo.data.github.html_url}>
+                            {repo.data.github.full_name}
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    )}
+                </li>
+            ))
+        }
+    </ul>
+
+    <Tags tags={project.data.tags} />
+</article>
+
+<style>
+    .project {
+        --stack-gap: 1rem;
+    }
+
+    .last-update {
+        --stack-gap: 0rem;
+        font-size: var(--font-size-1);
+        font-family: var(--headings-font-family);
+        font-weight: 500;
+    }
+
+    .project > :global(.tags) {
+        --stack-gap: 2rem;
+    }
+</style>

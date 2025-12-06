@@ -3,6 +3,8 @@
     --blue: #33607c;
     --blue-dark: #003f5c;
 
+    --red: #ad4545;
+
     --theme-color: light-dark(var(--blue), var(--blue-light));
     --border-color: #bbb;
 
@@ -24,7 +26,7 @@
     --headings-font-family: 'Vollkorn', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
 
     /* @link https://utopia.fyi/type/calculator?c=360,20,1.125,1400,20,1.333,5,1 */
-    --font-size--1: clamp(0.9377rem, 1.1711rem + -0.2667vw, 1.1111rem);
+    --font-size--1: clamp(1rem, 1.1711rem + -0.2667vw, 1.1111rem);
     --font-size-0: clamp(1.25rem, 1.25rem + 0vw, 1.25rem);
     --font-size-1: clamp(1.4063rem, 1.3163rem + 0.4vw, 1.6663rem);
     --font-size-2: clamp(1.582rem, 1.3608rem + 0.9832vw, 2.2211rem);
