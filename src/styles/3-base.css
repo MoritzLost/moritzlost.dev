@@ -112,17 +112,13 @@ sub {
     font-size: 0.75em;
 }
 
-ul:not([class]),
-ol:not([class]),
-.unstyled-list {
+:is(ul, ol):not([class]) {
     list-style-type: none;
     padding: 0;
 
-    > li {
-        list-style-type: none;
+    & > li {
         position: relative;
-        padding-left: 1.5em;
-        --stack-gap: 0.75em;
+        padding-left: 1.25em;
 
         &::before {
             position: absolute;
@@ -132,30 +128,19 @@ ol:not([class]),
         }
     }
 
-    > li + li {
-        margin-top: var(--stack-gap);
-    }
-
-    > ul:not([class]),
-    > ol:not([class]) {
-        margin-top: var(--stack-gap);
+    & > :is(li + li, ul:not([class]), ol:not([class])) {
+        margin-block-start: 0.75rem;
     }
 }
 
-ul:not([class]),
-ul.unstyled-list {
-    > li {
-        &::before {
-            content: var(--list-icon, '→');
-        }
-    }
+ul:not([class]) > li::before {
+    content: '—';
 }
 
-ol:not([class]),
-ol.unstyled-list {
+ol:not([class]) {
     counter-reset: steps;
 
-    > li {
+    & > li {
         counter-increment: steps;
 
         &::before {

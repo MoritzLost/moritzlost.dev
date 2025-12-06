@@ -6,6 +6,6 @@ Thomas Sausen interviewed me for his [CraftEntries podcast](https://craftentries
 
 Listen to the episode on:
 
-- [craftentries.io](https://craftentries.io/podcast/crafting-connections-and-collaboration)
-- [Spotify](https://open.spotify.com/episode/1YNfdQ3hUqUm9bmU5xp7Ao?si=1e3a62fb92264ec9)
-- [Apple Podcasts](https://podcasts.apple.com/us/podcast/crafting-connections-and-collaboration/id1639435946?i=1000721833736)
+- [craftentries.io ↗](https://craftentries.io/podcast/crafting-connections-and-collaboration)
+- [Spotify ↗](https://open.spotify.com/episode/1YNfdQ3hUqUm9bmU5xp7Ao?si=1e3a62fb92264ec9)
+- [Apple Podcasts ↗](https://podcasts.apple.com/us/podcast/crafting-connections-and-collaboration/id1639435946?i=1000721833736)
