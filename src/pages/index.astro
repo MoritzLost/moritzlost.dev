@@ -84,6 +84,18 @@ const appearances = await getCollection('appearances').then(collection =>
                                 <Time date={date} />
                             </p>
                             <Content />
+                            {appearance.data.links?.length > 0 && (
+                                <ul class="conference-talk__links" aria-label="Links and resources">
+                                    {appearance.data.links.map(link => (
+                                        <li>
+                                            <a href={link.url}>
+                                                {link.title}
+                                                <span aria-hidden="true">↗</span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </article>
                     );
                 })
@@ -163,6 +175,10 @@ const appearances = await getCollection('appearances').then(collection =>
     .conference-talk > :global(* + *) {
         margin-block-start: var(--stack-gap);
         --stack-gap: 1rem;
+    }
+
+    .conference-talk__links > li + li {
+        margin-block-start: 0.75rem;
     }
 
     .conference-talk__date {

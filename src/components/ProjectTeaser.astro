@@ -24,7 +24,7 @@ const lastPush = repos.map(repo => new Date(repo.data.github.pushed_at)).sort((a
 
     <Content />
 
-    <ul>
+    <ul class="project-links" aria-label="Project website and repository">
         {
             project.data.website && (
                 <li>
@@ -64,6 +64,10 @@ const lastPush = repos.map(repo => new Date(repo.data.github.pushed_at)).sort((a
         font-size: var(--font-size-1);
         font-family: var(--headings-font-family);
         font-weight: 500;
+    }
+
+    .project-links > li + li {
+        margin-block-start: 0.75rem;
     }
 
     .project > :global(.tags) {

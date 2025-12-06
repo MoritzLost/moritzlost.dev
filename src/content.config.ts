@@ -15,6 +15,12 @@ export const collections = {
         }),
         schema: z.object({
             title: z.string(),
+            links: z.array(
+                z.object({
+                    title: z.string(),
+                    url: z.string().url(),
+                }),
+            ),
         }),
     }),
     articles: defineCollection({
