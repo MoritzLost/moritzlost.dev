@@ -3,15 +3,31 @@ import Html from './Html.astro';
 import type { Props as SeoProps } from './Html.astro';
 
 interface Props extends SeoProps {}
+
+const pages = [
+    { href: '/', label: 'Home' },
+    { href: '/projects/', label: 'Projects' },
+    // { href: '/articles/', label: 'Articles' },
+];
 ---
 
 <Html {...Astro.props}>
     <nav aria-label="Primary">
         <a href="#main" class="visually-hidden-focusable skip-to-main-content">Skip to main content</a>
         <ul class="menu">
-            <li class="menu__item"><a class="menu__link" href="/">Home</a></li>
-            <li class="menu__item"><a class="menu__link" href="/projects/">Projects</a></li>
-            <!-- <li class="menu__item"><a class="menu__link" href="/articles/">Articles</a></li> -->
+            {
+                pages.map(link => (
+                    <li class="menu__item">
+                        <a
+                            class="menu__link"
+                            href={link.href}
+                            aria-current={link.href === Astro.url.pathname ? 'page' : undefined}
+                        >
+                            {link.label}
+                        </a>
+                    </li>
+                ))
+            }
         </ul>
     </nav>
 
@@ -63,6 +79,10 @@ interface Props extends SeoProps {}
     .menu__link {
         display: block;
         padding: 0.75rem 1rem;
+    }
+
+    .menu__link[aria-current='page'] {
+        text-decoration-thickness: 0.2em;
     }
 
     .contact-links {
