@@ -1,0 +1,41 @@
+---
+import type { MarkdownLayoutProps } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import type { Props as LayoutProps } from './Html.astro';
+
+type Props = LayoutProps &
+    MarkdownLayoutProps<{
+        title: string;
+    }>;
+
+const { headings, frontmatter } = Astro.props;
+---
+
+<BaseLayout {...frontmatter}>
+    <section class="stack" aria-labelledby={headings?.length ? headings[0].slug : undefined}>
+        <slot />
+    </section>
+</BaseLayout>
+
+<style>
+    section {
+        container-type: inline-size;
+        width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-areas: '. content .';
+
+        grid-template-columns:
+            [fullwidth-start]
+            var(--container-padding-x)
+            [content-start]
+            minmax(0, 70ch)
+            [content-end]
+            var(--container-padding-x)
+            [fullwidth-end];
+    }
+
+    section > :global(*) {
+        grid-column: content-start / content-end;
+    }
+</style>
