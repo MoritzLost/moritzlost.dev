@@ -7,7 +7,7 @@ const projects = await getCollection('projects');
 const projectsSorted = projects.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title="Projects">
+<BaseLayout title="Projects" description="Personal and open source projects by Moritz L’Hoest.">
     <section id="projects" aria-labelledby="projects-heading">
         <h1 id="projects-heading">My projects</h1>
         <div class="projects">
