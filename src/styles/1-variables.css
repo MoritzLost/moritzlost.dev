@@ -51,5 +51,5 @@
     --stack-gap: 1.5rem;
     --stack-gap-headings: clamp(2rem, 6vw, 3rem);
 
-    --container-padding-x: clamp(1.5rem, 3vw, 3rem);
+    --container-padding-x: clamp(24px, 3vw, 48px);
 }
