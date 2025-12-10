@@ -158,8 +158,8 @@ samp {
 }
 
 :not(pre) > code {
-    color: #b3261e;
-    background-color: #fceeed;
+    color: light-dark(#b3261e, #ffe4e6);
+    background-color: color-mix(in srgb, currentColor 8%, transparent);
     padding: 0.2em 0.3em;
     border-radius: 0.25em;
 }
