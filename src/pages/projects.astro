@@ -8,8 +8,8 @@ const projectsSorted = projects.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout title="Projects" description="Personal and open source projects by Moritz L’Hoest.">
-    <section id="projects" aria-labelledby="projects-heading">
-        <h1 id="projects-heading">My projects</h1>
+    <section aria-labelledby="projects">
+        <h1 id="projects">Projects</h1>
         <div class="projects">
             {projectsSorted.map(project => <ProjectTeaser {project} />)}
         </div>
