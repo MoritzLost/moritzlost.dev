@@ -2,5 +2,10 @@ import type { CollectionEntry } from 'astro:content';
 
 export const sortArticlesByDatePrefix = (articles: CollectionEntry<'articles'>[]) =>
     [...articles].sort((a, b) => {
-        return new Date(b.id.slice(0, 10)).valueOf() - new Date(a.id.slice(0, 10)).valueOf();
+        const filenameA = a.filePath!.split('/').pop()!;
+        const filenameB = b.filePath!.split('/').pop()!;
+        const dateA = filenameA.slice(0, 10);
+        const dateB = filenameB.slice(0, 10);
+
+        return new Date(dateB).valueOf() - new Date(dateA).valueOf();
     });
