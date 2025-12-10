@@ -23,6 +23,12 @@ const seoImage = image ? await getImage({ src: image, width: 1600, quality: 'hig
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="color-scheme" content="light dark" />
         <meta name="generator" content={Astro.generator} />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="Moritz L'Hoest - Articles"
+            href={new URL('rss.xml', Astro.site)}
+        />
 
         <title>{title}</title>
         {description && <meta name="description" content={description} />}
