@@ -2,10 +2,10 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import TableOfContents from '@components/TableOfContents.astro';
-import Emoji from '@components/Emoji.astro';
 import Time from '@components/Time.astro';
 import { sortArticlesByDatePrefix } from '@utils/sort-content';
 import { render } from 'astro:content';
+import { slug } from 'github-slugger';
 
 interface Props {
     article: CollectionEntry<'articles'>;
@@ -21,22 +21,23 @@ export async function getStaticPaths() {
     }));
 }
 
-// const { article, articles } = Astro.props;
 const { article } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await render(article);
+
+const titleSlug = slug(article.data.title);
 
 const fileHistoryUrl = `https://github.com/MoritzLost/moritzlost.dev/commits/main/${article.filePath}`;
 const editUrl = `https://github.com/MoritzLost/moritzlost.dev/edit/main/${article.filePath}`;
 
 const publishedDate = new Date(remarkPluginFrontmatter.publishedDate);
-const hasRevisionHistory = remarkPluginFrontmatter.revisionHistory.length > 1;
-const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHistory[0];
+const hasRevisions = remarkPluginFrontmatter.revisionHistory.length > 1;
+const lastRevision = hasRevisions && new Date(remarkPluginFrontmatter.revisionHistory[0]);
 ---
 
 <BaseLayout title={article.data.title}>
-    <section class="article-layout" aria-labelledby="article-heading">
+    <section class="article-layout" aria-labelledby={titleSlug}>
         <div class="article-layout__header">
-            <h1 id="article-heading">{article.data.title}</h1>
+            <h1 id={titleSlug}>{article.data.title}</h1>
             <p class="subline-author">
                 —by Moritz L’Hoest
                 <span class="subline-divider" aria-hidden="true">·</span>
@@ -48,37 +49,33 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
             <TableOfContents {headings} />
         </aside>
 
-        <div class="article-layout__content stack">
+        <div class="article-layout__content stack" data-toc-content>
             <Content />
 
-            <footer class="article-footer stack">
-                <hr />
-                {
-                    article.data.disclaimerNoAI && (
-                        <p class="no-ai-disclaimer">
-                            This article was written by a human without the involvement of AI.
-                        </p>
-                    )
-                }
-
-                <p class="article-meta">
-                    <span><Emoji emoji="💡" /> Published on <Time date={publishedDate} /></span>
+            <footer class="article-footer stack" aria-labelledby="revisions-and-links">
+                <h2 class="h4" id="revisions-and-links">Revisions and links</h2>
+                <dl class="article-meta">
+                    <dt>Published</dt>
+                    <dd><Time date={publishedDate} /></dd>
                     {
                         lastRevision && (
-                            <span>
-                                <Emoji emoji="✏️" /> Last edited on <Time date={new Date(lastRevision.date)} />
-                            </span>
+                            <>
+                                <dt>Updated</dt>
+                                <dd>{<Time date={lastRevision} />}</dd>
+                                <dt>History</dt>
+                                <dd>
+                                    <a href={fileHistoryUrl}>View revision history</a>
+                                </dd>
+                            </>
                         )
                     }
-                    {
-                        hasRevisionHistory && (
-                            <span>
-                                <Emoji emoji="🗂️" /> <a href={fileHistoryUrl}>View revision history</a>
-                            </span>
-                        )
-                    }
-                    <span><Emoji emoji="💡" /> <a href={editUrl}>Suggest an edit</a></span>
-                </p>
+                    <dt>Contribute</dt>
+                    <dd><a href={editUrl}>Suggest an edit</a></dd>
+                    <dt>Subscribe</dt>
+                    <dd><a href="/rss.xml">RSS feed</a></dd>
+                </dl>
+
+                <p class="disclaimer">This article was written by a human.</p>
             </footer>
         </div>
     </section>
@@ -145,24 +142,25 @@ const lastRevision = hasRevisionHistory && remarkPluginFrontmatter.revisionHisto
     }
 
     .article-footer {
-        margin-top: 5rem;
+        margin-top: clamp(64px, 6vw, 96px);
         font-size: var(--font-size--1);
     }
 
-    .no-ai-disclaimer {
+    .disclaimer {
+        --stack-gap: 3rem;
         font-style: italic;
     }
 
     .article-meta {
-        > * {
-            display: block;
-        }
-        > * + * {
-            margin-top: .5rem;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: clamp(16px, 3vw, 48px);
+        row-gap: 1rem;
+
+        & > dt {
+            font-weight: var(--font-weight-bold);
         }
     }
 
-    .article-link {
-        display: grid;
-    }
+
 </style>

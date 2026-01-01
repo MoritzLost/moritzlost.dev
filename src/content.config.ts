@@ -29,7 +29,7 @@ export const collections = {
             base: './src/content/articles',
             generateId: ({ entry }) => entry.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, ''),
         }),
-        schema: z.object({ title: z.string(), disclaimerNoAI: z.boolean().default(true) }),
+        schema: z.object({ title: z.string(), description: z.string() }),
     }),
     projects: defineCollection({
         loader: glob({ pattern: '*.md', base: './src/content/projects' }),

@@ -1,14 +1,61 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Time from './Time.astro';
 
 interface Props {
     article: CollectionEntry<'articles'>;
 }
 
 const { article } = Astro.props;
-const headlineId = `article-${article.id}-headline`;
+const { remarkPluginFrontmatter } = await render(article);
+const date = new Date(remarkPluginFrontmatter.publishedDate);
 ---
 
-<h2 id={headlineId}>{article.data.title}</h2>
+<article aria-labelledby={article.id} class="article-teaser">
+    <h2 class="article-teaser__heading" id={article.id}>
+        <a class="article-teaser__link" href={`/articles/${article.id}/`}>
+            {article.data.title}
+            <span aria-hidden="true">→</span>
+        </a>
+    </h2>
 
-<a aria-labelledby={headlineId} href={`/articles/${article.id}`}>Read article</a>
+    <p class="article-teaser__date">
+        <Time date={date} />
+    </p>
+
+    <p class="article-teaser__description">
+        {article.data.description}
+    </p>
+</article>
+
+<style>
+    .article-teaser {
+        --stack-gap: 0.5rem;
+    }
+
+    .article-teaser > * + * {
+        margin-block-start: var(--stack-gap);
+    }
+
+    .article-teaser__link {
+        text-decoration-thickness: 0.05em;
+        text-underline-offset: 0.3em;
+        text-decoration-skip-ink: auto;
+
+        &:hover {
+            text-decoration-thickness: 0.1em;
+        }
+
+        &:focus {
+            text-underline-offset: 0.4em;
+        }
+    }
+
+    .article-teaser__date {
+        --stack-gap: 0.25rem;
+        font-size: var(--font-size-1);
+        font-family: var(--headings-font-family);
+        font-weight: 500;
+    }
+</style>

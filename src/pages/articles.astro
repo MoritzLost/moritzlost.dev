@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleTeaser from '@components/ArticleTeaser.astro';
+import { sortArticlesByDatePrefix } from '@utils/sort-content';
+
+const articles = await getCollection('articles');
+const articlesSorted = sortArticlesByDatePrefix(articles);
+---
+
+<!-- @TODO: SEO description -->
+<BaseLayout title="Articles about web development">
+    <section aria-labelledby="articles">
+        <h1 id="articles">Articles</h1>
+        <p class="intro">
+            My occasionally incoherent and infrequent ramblings about web development and possibly other stuff, too.
+            <br />
+            <a href="/rss.xml">RSS feed →</a>
+        </p>
+
+        <div class="articles">
+            {articlesSorted.map(article => <ArticleTeaser {article} />)}
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    section {
+        width: 100%;
+        display: grid;
+        justify-content: space-between;
+        grid-template-areas: '. content .';
+
+        grid-template-columns:
+            [fullwidth-start]
+            var(--container-padding-x)
+            [content-start]
+            minmax(0, 70ch)
+            [content-end]
+            var(--container-padding-x)
+            [fullwidth-end];
+    }
+
+    section > * {
+        grid-column: content-start / content-end;
+    }
+
+    .intro {
+        text-wrap: balance;
+    }
+
+    .articles {
+        margin-block-start: clamp(32px, 4vw, 64px);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: clamp(48px, 6vw, 128px);
+    }
+</style>
