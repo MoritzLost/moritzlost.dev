@@ -24,7 +24,7 @@ const { hierarchy } = Astro.props;
 <style lang="postcss">
     .toc-list {
         font-size: var(--font-size--1);
-        --stack-gap: 0.5rem;
+        --stack-gap: 1rem;
         .toc-list {
             margin-top: var(--stack-gap);
             padding-left: 1.5rem;
@@ -33,12 +33,5 @@ const { hierarchy } = Astro.props;
 
     .toc-list__item + .toc-list__item {
         margin-top: var(--stack-gap);
-    }
-
-    .toc-list__link {
-        text-decoration-skip-ink: auto;
-        text-decoration-skip: edges;
-        text-decoration-thickness: 0.075em;
-        text-underline-offset: 0.5em;
     }
 </style>
