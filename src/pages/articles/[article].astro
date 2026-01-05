@@ -52,7 +52,7 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
             <TableOfContents {headings} />
         </aside>
 
-        <div class="article-layout__content stack" data-toc-content>
+        <div class="article-layout__content prose stack" data-toc-content>
             <Content />
 
             <footer class="article-footer stack" aria-labelledby="revisions-and-links">
@@ -167,5 +167,17 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
         }
     }
 
+    .prose :global(aside) {
+        padding: 24px;
+        border-left: 4px solid var(--theme-color);
+        background-color: light-dark(
+            color-mix(in srgb, var(--blue) 8%, transparent),
+            color-mix(in srgb, var(--blue-light) 12%, transparent)
+        );
+        border-radius: 0.25rem;
 
+        & > :global(* + *) {
+            margin-block-start: var(--stack-gap);
+        }
+    }
 </style>
