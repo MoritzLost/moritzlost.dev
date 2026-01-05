@@ -26,12 +26,15 @@ const { Content, headings, remarkPluginFrontmatter } = await render(article);
 
 const titleSlug = slug(article.data.title);
 
-const fileHistoryUrl = `https://github.com/MoritzLost/moritzlost.dev/commits/main/${article.filePath}`;
-const editUrl = `https://github.com/MoritzLost/moritzlost.dev/edit/main/${article.filePath}`;
-
 const publishedDate = new Date(remarkPluginFrontmatter.publishedDate);
 const hasRevisions = remarkPluginFrontmatter.revisionHistory.length > 1;
 const lastRevision = hasRevisions && new Date(remarkPluginFrontmatter.revisionHistory[0]);
+
+const githubUrl = `https://github.com/MoritzLost/moritzlost.dev/`;
+const githubBranch = 'main';
+const fileUrl = `${githubUrl}blob/${githubBranch}/${article.filePath}`;
+const fileHistoryUrl = `${githubUrl}commits/${githubBranch}/${article.filePath}`;
+const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
 ---
 
 <BaseLayout title={article.data.title}>
@@ -69,6 +72,8 @@ const lastRevision = hasRevisions && new Date(remarkPluginFrontmatter.revisionHi
                             </>
                         )
                     }
+                    <dt>Source</dt>
+                    <dd><a href={fileUrl}>View source on GitHub</a></dd>
                     <dt>Contribute</dt>
                     <dd><a href={editUrl}>Suggest an edit</a></dd>
                     <dt>Subscribe</dt>
