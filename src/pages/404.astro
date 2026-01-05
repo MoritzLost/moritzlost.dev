@@ -13,7 +13,15 @@ import BaseLayout from '@layouts/BaseLayout.astro';
     body {
         height: 100svh;
         display: grid;
-        place-items: center;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    :global(main) {
+        place-self: center;
+    }
+
+    section {
+        padding-inline: var(--container-padding-x);
     }
 
     h1 {
