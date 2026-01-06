@@ -1,23 +1,27 @@
-import type { MarkdownHeading } from "astro"
+import type { MarkdownHeading } from 'astro';
 
 export interface HierarchyItem {
-    heading: MarkdownHeading,
-    children: HierarchyItem[],
-};
+    heading: MarkdownHeading;
+    children: HierarchyItem[];
+}
 
 export const createHeadingsHierarchy = (headings: MarkdownHeading[]) => {
-    const levels: HierarchyItem[] = []
+    const levels: HierarchyItem[] = [];
+    if (headings.length === 0) {
+        return levels;
+    }
+
     const minimumDepth: number = headings[0].depth;
 
     const parents = new Map();
     headings.forEach(heading => {
-        const level = { heading, children: [], };
+        const level = { heading, children: [] };
         parents.set(heading.depth, level);
         if (heading.depth === minimumDepth) {
             levels.push(level);
         } else {
             parents.get(heading.depth - 1).children.push(level);
         }
-    })
+    });
     return levels;
-}
+};
