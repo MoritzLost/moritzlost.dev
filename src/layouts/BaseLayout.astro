@@ -10,14 +10,31 @@ const pages = [
     { href: '/projects/', label: 'Projects' },
 ];
 
-const legal = [
-    { href: '/legal/', label: 'Legal notice' },
-    { href: '/privacy-policy/', label: 'Privacy policy' },
+const footer = [
+    {
+        heading: 'GitHub repository',
+        links: [{ href: 'https://github.com/MoritzLost/moritzlost.dev', label: 'View source code' }],
+    },
+    {
+        heading: 'Find me on the internet',
+        links: [
+            { href: 'https://github.com/MoritzLost', label: 'GitHub' },
+            { href: 'https://www.linkedin.com/in/moritzlost/', label: 'LinkedIn' },
+            { href: 'https://stackexchange.com/users/3818740/moritzlost', label: 'Stack Exchange' },
+        ],
+    },
+    {
+        heading: 'Legal',
+        links: [
+            { href: '/legal/', label: 'Legal notice' },
+            { href: '/privacy-policy/', label: 'Privacy policy' },
+        ],
+    },
 ];
 ---
 
 <Html {...Astro.props}>
-    <nav class="navigation" aria-label="Primary">
+    <nav class="main-navigation" aria-label="Primary">
         <a href="#main" class="visually-hidden-focusable skip-to-main-content">Skip to main content</a>
         <ul class="menu">
             {
@@ -40,57 +57,46 @@ const legal = [
         <slot />
     </main>
 
-    <footer id="footer" aria-labelledby="contact">
-        <h2 class="visually-hidden" id="contact">Contact links</h2>
+    <footer class="footer" id="footer">
+        <h2 class="visually-hidden" id="social-and-legal">Social and legal links</h2>
 
-        <div class="contact">
-            <ul class="footer-links" aria-label="Find me on the internet">
-                <li><a href="https://github.com/MoritzLost">GitHub</a></li>
-                <span class="separator" aria-hidden="true">·</span>
-                <li><a href="https://www.linkedin.com/in/moritzlost/">LinkedIn</a></li>
-                <span class="separator" aria-hidden="true">·</span>
-                <li><a href="https://stackexchange.com/users/3818740/moritzlost">Stack Exchange</a></li>
-            </ul>
-
-            <nav aria-label="Legal">
-                <ul class="footer-links">
-                    {
-                        legal.map((link, index) => (
-                            <>
-                                <li>
-                                    <a
-                                        href={link.href}
-                                        aria-current={link.href === Astro.url.pathname ? 'page' : undefined}
-                                    >
-                                        {link.label}
-                                    </a>
-                                </li>
-                                {index < legal.length - 1 && (
-                                    <span class="separator" aria-hidden="true">
-                                        ·
-                                    </span>
-                                )}
-                            </>
-                        ))
-                    }
-                </ul>
-            </nav>
-        </div>
+        <nav class="footer-navigation" aria-labelledby="social-and-legal">
+            {
+                footer.map(section => (
+                    <div>
+                        <h3>{section.heading}</h3>
+                        <ul class="footer-links">
+                            {section.links.map((link, index) => (
+                                <>
+                                    <li>
+                                        <a
+                                            href={link.href}
+                                            aria-current={link.href === Astro.url.pathname ? 'page' : undefined}
+                                        >
+                                            {link.label}
+                                        </a>
+                                    </li>
+                                    {index < section.links.length - 1 && (
+                                        <span class="separator" aria-hidden="true">
+                                            ·
+                                        </span>
+                                    )}
+                                </>
+                            ))}
+                        </ul>
+                    </div>
+                ))
+            }
+        </nav>
     </footer>
 </Html>
 
 <style>
-    .navigation {
+    .main-navigation {
         display: grid;
         justify-items: center;
         padding-block-start: 0.25rem;
         margin-block-end: clamp(1.5rem, 6vw, 6rem);
-    }
-
-    footer {
-        margin-block-start: clamp(4rem, 6vw, 6rem);
-        margin-block-end: 3rem;
-        padding-inline: var(--container-padding-x);
     }
 
     .skip-to-main-content {
@@ -116,18 +122,31 @@ const legal = [
         text-decoration-thickness: 0.2em;
     }
 
-    .contact {
+    .footer {
+        margin-block-start: clamp(4rem, 6vw, 6rem);
+        margin-block-end: 3rem;
+        padding-inline: var(--container-padding-x);
+    }
+
+    .footer-navigation {
         display: flex;
         flex-flow: row wrap;
-        column-gap: 64px;
-        row-gap: 2rem;
+        align-items: center;
         justify-content: center;
+        column-gap: 80px;
+        row-gap: 32px;
+    }
+
+    .footer-navigation h3 {
+        font-size: var(--font-size--1);
+        font-family: var(--font-family-base);
+        font-weight: var(--font-weight-bold);
+        margin-block-end: 0.75rem;
     }
 
     .footer-links {
         display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
+        flex-flow: row nowrap;
         column-gap: 1rem;
         row-gap: 1rem;
         font-size: var(--font-size--1);
@@ -137,9 +156,10 @@ const legal = [
         text-decoration-thickness: 0.2em;
     }
 
-    @media (max-width: 30rem) {
-        .contact {
+    @media (max-width: 37.5rem) {
+        .footer-navigation {
             flex-direction: column;
+            align-items: start;
         }
 
         .separator {
