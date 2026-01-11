@@ -53,6 +53,9 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
         {
             headings.length > 0 && (
                 <aside class="article-layout__aside">
+                    <div aria-hidden="true" class="reading-progress">
+                        <div class="reading-progress__bar" />
+                    </div>
                     <TableOfContents {headings} />
                 </aside>
             )
@@ -184,6 +187,49 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
 
         & > :global(* + *) {
             margin-block-start: var(--stack-gap);
+        }
+    }
+</style>
+
+<style>
+    .reading-progress {
+        display: none;
+    }
+
+    @supports (animation-timeline: scroll(y)) {
+        .reading-progress {
+            display: block;
+            margin-block-end: 24px;
+            background: color-mix(in srgb, var(--body-foreground) 18%, transparent);
+            height: 3px;
+            width: 100%;
+            border-radius: 3px;
+        }
+
+        .reading-progress__bar {
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: var(--theme-color);
+            animation-name: reading-progress;
+            animation-timeline: scroll(y);
+        }
+
+        @media (width < 70rem) {
+            .reading-progress {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: unset;
+                border-radius: 0;
+            }
+        }
+    }
+
+    @keyframes reading-progress {
+        to {
+            width: 100%;
         }
     }
 </style>
