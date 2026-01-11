@@ -1,0 +1,67 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Html from '@layouts/Html.astro';
+
+interface Props {
+    article: CollectionEntry<'articles'>;
+}
+
+export async function getStaticPaths() {
+    if (import.meta.env.PROD) {
+        return [];
+    }
+
+    const articles = await getCollection('articles');
+
+    return articles.map(article => ({
+        params: { article: article.id },
+        props: { article },
+    }));
+}
+
+const { article } = Astro.props;
+---
+
+<Html title={article.data.title}>
+    <div class="preview">
+        <h1>{article.data.title}</h1>
+        <p class="description">{article.data.seo_description}</p>
+        <hr class="divider" />
+        <p class="site">moritzlost.dev</p>
+    </div>
+</Html>
+
+<style>
+    .preview {
+        width: 1200px;
+        height: 630px;
+        padding: 32px 48px;
+        border-left: 24px solid var(--theme-color);
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        text-wrap: balance;
+        font-size: 80px;
+        line-height: 1.3;
+    }
+
+    .description {
+        font-size: 48px;
+        line-height: 1.6;
+    }
+
+    .divider {
+        margin-top: auto;
+        width: 100%;
+        border: 1px solid white;
+        opacity: 1;
+    }
+
+    .site {
+        margin-top: 8px;
+        font-size: 40px;
+        font-family: var(--font-family-mono);
+    }
+</style>

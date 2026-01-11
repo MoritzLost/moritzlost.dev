@@ -37,7 +37,11 @@ const fileHistoryUrl = `${githubUrl}commits/${githubBranch}/${article.filePath}`
 const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
 ---
 
-<BaseLayout title={article.data.title} description={article.data.seo_description || article.data.description}>
+<BaseLayout
+    title={article.data.title}
+    image={`/preview/${article.id}.png`}
+    description={article.data.seo_description || article.data.description}
+>
     <section class="article-layout" aria-labelledby={titleSlug}>
         <div class="article-layout__header">
             <h1 id={titleSlug}>{article.data.title}</h1>

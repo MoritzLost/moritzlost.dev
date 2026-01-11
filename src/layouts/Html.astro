@@ -6,13 +6,27 @@ import { getImage } from 'astro:assets';
 export interface Props {
     title: string;
     description?: string;
-    image?: ImageMetadata;
+    image?: ImageMetadata | string;
     imageAlternativeText?: string;
 }
 
 const { title, description, image, imageAlternativeText } = Astro.props;
 
-const seoImage = image ? await getImage({ src: image, width: 1600, quality: 'high' }) : null;
+let seoImage;
+let imageWidth = null;
+let imageHeight = null;
+if (image) {
+    if (typeof image == 'string') {
+        seoImage = image;
+    } else {
+        const optimizedImage = await getImage({ src: image, width: 1600, quality: 'high' });
+        seoImage = optimizedImage.src;
+        imageWidth = optimizedImage.attributes.width;
+        imageHeight = optimizedImage.attributes.height;
+    }
+} else {
+    seoImage = null;
+}
 ---
 
 <!doctype html>
@@ -33,9 +47,9 @@ const seoImage = image ? await getImage({ src: image, width: 1600, quality: 'hig
 
         <title>{title}</title>
         {description && <meta name="description" content={description} />}
-        {seoImage && <meta property="og:image" content={seoImage.src} />}
-        {seoImage && <meta property="og:image:width" content={String(seoImage.attributes.width)} />}
-        {seoImage && <meta property="og:image:height" content={String(seoImage.attributes.height)} />}
+        {seoImage && <meta property="og:image" content={seoImage} />}
+        {imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
+        {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
         {seoImage && imageAlternativeText && <meta property="og:image:alt" content={imageAlternativeText} />}
     </head>
 
