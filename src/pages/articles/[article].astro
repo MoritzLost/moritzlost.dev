@@ -52,9 +52,13 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
             </p>
         </div>
 
-        <aside class="article-layout__aside">
-            {headings.length && <TableOfContents {headings} />}
-        </aside>
+        {
+            headings.length > 0 && (
+                <aside class="article-layout__aside">
+                    <TableOfContents {headings} />
+                </aside>
+            )
+        }
 
         <div class="article-layout__content prose stack" data-toc-content>
             <Content />
