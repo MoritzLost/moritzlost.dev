@@ -86,7 +86,7 @@ I think it depends a lot on how an AI tool to generate alternative texts is inte
 
 In addition, generative AI should only be used to assist authors with writing alt texts, not replace them. Don’t buy into any offering that promises to generate alt texts automatically behind the scenes, without the author having to check or refine them. This will result in a lot of incorrect, unusable alt texts.
 
-Ideally, an AI assistant for alt texts should offer **multiple suggestions** for the author to choose from and **refine as necessary**. The context should be passed to the assistant automatically, as far as possible. Authors should also get an input field to write additional context for the prompt that’s passed to the AI.
+Ideally, an AI assistant for alt texts should offer **multiple suggestions** for the author to choose from and **refine as necessary**. The context should be passed to the assistant automatically, as far as possible. Authors should also get an input field to write additional context for the prompt that’s passed to the AI. Finally, the AI should also have the option to suggest that an image is purely decorative in the context of its placement and [should not have an alt text](#should-the-alt-text-be-a-required-field).
 
 I would not use any tool or plugin that just generates alt texts for every uploaded image, without making this visible to users or taking the context of the image into account.
 
