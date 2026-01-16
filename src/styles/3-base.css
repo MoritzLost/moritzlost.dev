@@ -154,6 +154,9 @@ pre,
 kbd,
 samp {
     font-family: var(--font-family-mono);
+}
+
+:not(pre) > :is(code, pre, kbd, samp) {
     font-size: 0.9em;
 }
 
