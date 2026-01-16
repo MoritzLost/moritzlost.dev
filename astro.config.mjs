@@ -12,5 +12,8 @@ export default defineConfig({
             GITHUB_ACCESS_TOKEN: envField.string({ context: 'server', access: 'secret' }),
         },
     },
+    build: {
+        inlineStylesheets: 'never',
+    },
     integrations: [sitemap()],
 });
