@@ -177,17 +177,22 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
     }
 
     .prose :global(aside) {
-        padding: 24px;
+        padding: 24px 32px;
         border-left: 4px solid var(--theme-color);
         background-color: light-dark(
             color-mix(in srgb, var(--blue) 8%, transparent),
             color-mix(in srgb, var(--blue-light) 12%, transparent)
         );
-        border-radius: 0.25rem;
+        border-radius: 4px;
 
         & > :global(* + *) {
             margin-block-start: var(--stack-gap);
         }
+    }
+
+    :global(.astro-code) {
+        padding: 16px;
+         border-radius: 4px;
     }
 </style>
 

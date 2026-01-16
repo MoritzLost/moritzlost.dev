@@ -6,6 +6,9 @@ export default defineConfig({
     site: 'https://moritzlost.dev',
     markdown: {
         remarkPlugins: [publishedDate, revisionHistory],
+        shikiConfig: {
+            theme: 'monokai',
+        },
     },
     env: {
         schema: {
