@@ -10,6 +10,8 @@ const projectsSorted = projects.sort((a, b) => a.data.order - b.data.order);
 <BaseLayout title="Projects" description="Personal and open source projects by Moritz L’Hoest.">
     <section aria-labelledby="projects">
         <h1 id="projects">Projects</h1>
+        <p class="intro">An overview of my open source projects and personal websites.</p>
+
         <div class="projects">
             {projectsSorted.map(project => <ProjectTeaser {project} />)}
         </div>
@@ -38,11 +40,13 @@ const projectsSorted = projects.sort((a, b) => a.data.order - b.data.order);
         grid-column: content-start / content-end;
     }
 
-    h1 {
-        margin-block-end: clamp(2rem, 3vw, 3rem);
+    .intro {
+        max-width: 65ch;
+        text-wrap: balance;
     }
 
     .projects {
+        margin-block-start: clamp(32px, 4vw, 64px);
         display: grid;
         column-gap: clamp(32px, 4vw, 64px);
         row-gap: clamp(48px, 6vw, 128px);
