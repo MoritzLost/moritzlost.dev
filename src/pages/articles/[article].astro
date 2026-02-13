@@ -61,7 +61,7 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
             )
         }
 
-        <div class="article-layout__content prose stack" data-toc-content>
+        <div class="article-layout__content article-content prose stack" data-toc-content>
             <Content />
 
             <footer class="article-footer stack" aria-labelledby="revisions-and-links">
@@ -153,6 +153,10 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
 
     .subline-divider {
         padding-inline: .5rem;
+    }
+
+    .article-content > :global(p:first-child) {
+        font-weight: var(--font-weight-bold);
     }
 
     .article-footer {

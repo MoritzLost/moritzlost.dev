@@ -4,7 +4,7 @@ description: 'This is a guide on the various ways to configure alternative texts
 seo_description: 'Everything you need to know about configuring alternative texts for images in Craft CMS for optimal accessibility and author experience.'
 ---
 
-**As Craft CMS gives you full control over content modelling, there are several ways to set up alternative text fields for images. This article is an in-depth exploration of the different options you have to design the author interfaces for alt texts, and what you as a developer can do to ensure that the site stays accessible.**
+As Craft CMS gives you full control over content modelling, there are several ways to set up alternative text fields for images. This article is an in-depth exploration of the different options you have to design the author interfaces for alt texts, and what you as a developer can do to ensure that the site stays accessible.
 
 This post is **not** intended as a general tutorial on using alt texts, and also not a guide on writing good alt texts. It’s specifically for developers who want to optimize the authoring experience and accessibility of alt texts in Craft CMS.
 
