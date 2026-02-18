@@ -10,6 +10,18 @@ My default configuration is intended as a starting point for every project. On s
 
 I won’t explain what every setting does. Instead, I’ll focus on _why_ I prefer the options that I use. You can find the explanation and default values of all the [general configuration options in the Craft documentation](https://craftcms.com/docs/5.x/reference/config/general.html). Anything not in the list is left at the default value.
 
+<aside>
+
+## Community notes
+
+I’ve updated the article to incorporate some solid feedback from the [Craft Discord](https://craftcms.com/community). In particular, I’ve switched to using [duration specifications](https://www.php.net/manual/en/dateinterval.construct.php) for all duration-related settings, and added the [`maxInvalidLogins`](https://craftcms.com/docs/5.x/reference/config/general.html#maxinvalidlogins) setting.
+
+An honorable mention goes to [`preventUserEnumeration`](https://craftcms.com/docs/5.x/reference/config/general.html#preventuserenumeration). Some people insist that this should be used on _all_ sites, period. I’m not quite comfortable with the UX downside, making password resets more difficult, so I don’t include this setting by default. However, you should definitely consider it, especially for sites with frontend user accounts.
+
+You can see the [full revision history on GitHub](https://github.com/MoritzLost/moritzlost.dev/commits/main/src/content/articles/2026-02-16-default-craft-cms-config.md).
+
+</aside>
+
 ## Setup
 
 ```php
@@ -53,19 +65,10 @@ Quick tip: If you don’t want to maintain the order manually, select all lines 
 </aside>
 
 ```php
-->cacheDuration(2_419_200) // 28 days
+->cacheDuration('P28D')
 ```
 
 The default is one day, which is very conservative for a lot of caches, especially the template cache. As long as you ensure all cache dependencies can be tracked in your `{% cache %}` tags, a longer cache duration shouldn’t be a problem. With custom cached data, you can always use a shorter cache duration where appropriate.
-
-<aside>
-
-Two sidenotes that apply to all numeric values:
-
-- The [numeric literal separators](https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.numeric-literal-separator) helpfully improve the readability of large numbers.
-- There are inline comments with a human-readable version of numeric options that are difficult to parse at a glance. A downside of this is the possibility of those comments becoming outdated when you change the value. But that issue is very easy to spot in a pull request, and [Copilot’s next edit suggestions](https://code.visualstudio.com/docs/copilot/ai-powered-suggestions#_next-edit-suggestions) are useful for this as well.
-
-</aside>
 
 ```php
 ->convertFilenamesToAscii(true)
@@ -94,7 +97,7 @@ We use AVIF with a fallback to WebP for all images by default. AVIF compresses v
 
 
 ```php
-->defaultTokenDuration(604_800) // 7 days
+->defaultTokenDuration('P7D')
 ```
 
 We found that some links with tokens expire a bit too quickly with the default (1 day).
@@ -120,7 +123,7 @@ I like the shorthand variables for the environments because they read almost lik
 This instructs crawlers not to index the site in any environment that’s _not_ production. This is very useful so your staging sites never end up in any search engine’s index, even if they’re not behind basic authentication.
 
 ```php
-->elevatedSessionDuration(900) // 15 minutes
+->elevatedSessionDuration('PT15M')
 ```
 
 Again, the default of five minutes is a bit short. If you have to regularly manage user accounts, constantly having to enter your password gets old fast.
@@ -152,10 +155,16 @@ When we started working with Craft, we decided to keep using `snake_case` for al
 This is mostly personal preference.
 
 ```php
+->maxInvalidLogins(5)
+```
+
+Just good security practice to prevent brute-force login attempts.
+
+```php
 ->maxUploadFileSize(67_108_864) // 64 MB
 ```
 
-The default is 16 MB, which you exceed very quickly with some larger PDFs or videos.
+The default is 16 MB, which you exceed very quickly with some larger PDFs or videos. The [numeric literal separators](https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.numeric-literal-separator) helpfully improve the readability of large numbers.
 
 ```php
 ->omitScriptNameInUrls(true)
@@ -176,7 +185,7 @@ Same as the default, but without the underscore prefix. See `privateTemplateTrig
 This allows you to use singles in templates like you could globals: Just refer to them by name, and Craft will load them automatically behind the scenes. Singles are only loaded when they are actually needed with this setting, so it shouldn’t have a negative performance impact.
 
 ```php
-->previewTokenDuration(604_800) // 7 days
+->previewTokenDuration('P7D')
 ```
 
 This is very useful if you (or your authors) want to send preview links to other people, especially stakeholders that don’t have their own account. If you send those on a Friday, you don’t want them to expire before Monday.
@@ -190,7 +199,7 @@ This might be the most controversial take in this entire article. I don’t like
 The only thing that file-based routing does is save you from having to write _one line_ in your `config/routes.php`. And in turn, it’s really annoying having to always add (and look at) the underscore prefix in a template or folder. All those underscores are just noise.
 
 ```php
-->rememberedUserSessionDuration(2_592_000) // 30 days
+->rememberedUserSessionDuration('P30D')
 ```
 
 Just a bit longer than the default of two weeks. Check this against your security policies.
@@ -250,7 +259,7 @@ If authors upload tiny source images, upscaling won’t do them any good. Instea
 Unless you have very specific requirements for frontend user accounts, this will make it easier for everyone to log in and recover their accounts if they forget their password. The username is just an additional thing to remember. You can have any number of usernames on different sites, but most people use only one or a few different email addresses. Especially if you’re building sites for businesses, and authors use their employee email.
 
 ```php
-->verificationCodeDuration(604_800); // 7 days
+->verificationCodeDuration('P7D');
 ```
 
 Same as with preview tokens. If you generate a password reset link for authors and send it by email, you don’t want it to expire by the next day.
