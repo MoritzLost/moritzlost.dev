@@ -76,8 +76,8 @@ const appearances = await getCollection('appearances').then(collection =>
                     const { Content, remarkPluginFrontmatter } = await render(appearance);
                     const date = new Date(remarkPluginFrontmatter.publishedDate);
                     return (
-                        <article class="conference-talk" aria-labelledby={`${appearance.id}-heading`}>
-                            <h3 class="conference-talk__heading" id={`${appearance.id}-heading`}>
+                        <article class="conference-talk" aria-labelledby={`${appearance.id}`}>
+                            <h3 class="conference-talk__heading" id={`${appearance.id}`}>
                                 {appearance.data.title}
                             </h3>
                             <p class="conference-talk__date">
