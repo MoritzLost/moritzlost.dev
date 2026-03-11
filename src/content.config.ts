@@ -1,5 +1,6 @@
-import { z, defineCollection, reference } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 import { fetchGitHubRepository } from '@utils/github';
 import repositories from './content/repositories.json';
 import type { Octokit } from 'octokit';
@@ -18,7 +19,7 @@ export const collections = {
             links: z.array(
                 z.object({
                     title: z.string(),
-                    url: z.string().url(),
+                    url: z.url(),
                 }),
             ),
         }),
@@ -41,7 +42,7 @@ export const collections = {
             title: z.string(),
             tags: z.array(z.string()),
             repositories: z.array(reference('repositories')),
-            website: z.string().url().optional(),
+            website: z.url().optional(),
             order: z.number(),
         }),
     }),
