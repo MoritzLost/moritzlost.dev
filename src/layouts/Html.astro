@@ -37,6 +37,10 @@ if (image) {
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="color-scheme" content="light dark" />
         <meta name="generator" content={Astro.generator} />
+
+        <link rel="preload" href="/fonts/fira-sans/v18/fira-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/vollkorn/v30/vollkorn-400-900.woff2" as="font" type="font/woff2" crossorigin />
+
         <link rel="sitemap" type="application/xml" href={new URL('sitemap-index.xml', Astro.site)} />
         <link
             rel="alternate"
