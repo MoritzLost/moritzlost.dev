@@ -1,11 +1,14 @@
 import { defineConfig, envField } from 'astro/config';
 import { publishedDate, revisionHistory } from './src/utils/content-frontmatter';
 import sitemap from '@astrojs/sitemap';
+import { unified } from '@astrojs/markdown-remark';
 
 export default defineConfig({
     site: 'https://moritzlost.dev',
     markdown: {
-        remarkPlugins: [publishedDate, revisionHistory],
+        processor: unified({
+            remarkPlugins: [publishedDate, revisionHistory],
+        }),
         shikiConfig: {
             theme: 'monokai',
         },
