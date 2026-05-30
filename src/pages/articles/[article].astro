@@ -160,7 +160,7 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
     }
 
     .article-footer {
-        margin-top: clamp(64px, 6vw, 96px);
+        margin-top: clamp(32px, 4vw, 64px);
         font-size: var(--font-size--1);
     }
 
@@ -180,7 +180,7 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
         }
     }
 
-    .prose :global(aside) {
+    .prose :global(aside), .article-footer {
         padding: 24px 32px;
         border-left: 4px solid var(--theme-color);
         background-color: light-dark(
