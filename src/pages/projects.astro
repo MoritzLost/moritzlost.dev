@@ -1,10 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ProjectTeaser from '@components/ProjectTeaser.astro';
+import { getProjectsInOrder } from '@utils/collections';
 
-const projects = await getCollection('projects');
-const projectsSorted = projects.sort((a, b) => a.data.order - b.data.order);
+const projects = await getProjectsInOrder();
 ---
 
 <BaseLayout title="Projects" description="Personal and open source projects by Moritz L’Hoest.">
@@ -13,7 +12,7 @@ const projectsSorted = projects.sort((a, b) => a.data.order - b.data.order);
         <p class="intro">An overview of my open source projects and personal websites.</p>
 
         <div class="projects">
-            {projectsSorted.map(project => <ProjectTeaser {project} />)}
+            {projects.map(project => <ProjectTeaser {project} />)}
         </div>
     </section>
 </BaseLayout>

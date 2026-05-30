@@ -1,22 +1,16 @@
 ---
-import { render, getCollection } from 'astro:content';
+import { render } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Time from '@components/Time.astro';
-import { getDateFromFilepath } from '@utils/dates';
+import { getAppearancesInOrder } from '@utils/collections';
 
 import portrait from '../images/portrait.jpg';
 import dotAll2023 from '../images/dot-all-2023.jpg';
 import dotAll2023Square from '../images/dot-all-2023-square.jpg';
 import Emoji from '@components/Emoji.astro';
 
-const appearances = await getCollection('appearances').then(collection =>
-    collection.sort((a, b) => {
-        const dateA = getDateFromFilepath(a.filePath!);
-        const dateB = getDateFromFilepath(b.filePath!);
-        return dateB.getTime() - dateA.getTime();
-    }),
-);
+const appearances = await getAppearancesInOrder();
 ---
 
 <BaseLayout

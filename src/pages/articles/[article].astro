@@ -1,21 +1,19 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import TableOfContents from '@components/TableOfContents.astro';
 import Time from '@components/Time.astro';
+import { type CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import { slug } from 'github-slugger';
-import { sortArticlesByDatePrefix } from '@utils/sort-content';
+import { getArticlesInOrder } from '@utils/collections';
 
 interface Props {
     article: CollectionEntry<'articles'>;
-    articles: Array<CollectionEntry<'articles'>>;
 }
 
 export async function getStaticPaths() {
-    const articles = await getCollection('articles');
-    const articlesSorted = sortArticlesByDatePrefix(articles);
-    return articlesSorted.map(article => ({
+    const articles = await getArticlesInOrder();
+    return articles.map(article => ({
         params: { article: article.id },
         props: { article },
     }));

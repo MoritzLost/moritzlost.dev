@@ -1,11 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ArticleTeaser from '@components/ArticleTeaser.astro';
-import { sortArticlesByDatePrefix } from '@utils/sort-content';
+import { getArticlesInOrder } from '@utils/collections';
 
-const articles = await getCollection('articles');
-const articlesSorted = sortArticlesByDatePrefix(articles);
+const articles = await getArticlesInOrder();
 ---
 
 <BaseLayout title="Articles about web development">
@@ -18,7 +16,7 @@ const articlesSorted = sortArticlesByDatePrefix(articles);
         </p>
 
         <div class="articles">
-            {articlesSorted.map(article => <ArticleTeaser {article} />)}
+            {articles.map(article => <ArticleTeaser {article} />)}
         </div>
     </section>
 </BaseLayout>
