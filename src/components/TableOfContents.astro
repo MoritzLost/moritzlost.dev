@@ -17,6 +17,84 @@ const hierarchy = createHeadingsHierarchy(headings);
     <TableOfContentsList {hierarchy} />
 </nav>
 
+<script>
+    // @TODO: Fix for headings in <aside> …
+    const links = Array.from(document.querySelectorAll('.toc-list__link'));
+    const nodes = document.querySelector('[data-toc-content]')!.children;
+    const headingsByNode = new WeakMap();
+
+    let currentHeading = null;
+    for (const node of nodes) {
+        if (node.tagName.match(/^H[2-6]$/)) {
+            currentHeading = node;
+        }
+
+        if (!currentHeading) {
+            continue;
+        }
+
+        headingsByNode.set(node, currentHeading);
+    }
+
+    const visibleHeights = new Map();
+
+    const intersectionObserver = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return visibleHeights.delete(entry.target);
+                }
+
+                visibleHeights.set(entry.target, entry.intersectionRect.height);
+            });
+
+            const totalHeightByHeading = Array.from(visibleHeights).reduce((map, [node, height]) => {
+                const heading = headingsByNode.get(node);
+                if (!heading) return map;
+
+                map.set(heading, (map.get(heading) ?? 0) + height);
+                return map;
+            }, new Map());
+
+            const highestValue = Math.max(...totalHeightByHeading.values());
+            const activeHeading = Array.from(totalHeightByHeading).find(([_, height]) => {
+                return height === highestValue;
+            });
+
+            links.forEach(link => link.classList.remove('current-section'));
+            if (!activeHeading) {
+                return;
+            }
+
+            links
+                .find(link => link.getAttribute('href') === `#${activeHeading[0].id}`)
+                ?.classList.add('current-section');
+        },
+        {
+            threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
+        },
+    );
+
+    const isDesktopLayout = window.matchMedia('(min-width: 70rem)');
+
+    if (isDesktopLayout.matches) {
+        for (const node of nodes) {
+            intersectionObserver.observe(node);
+        }
+    }
+
+    isDesktopLayout.addEventListener('change', event => {
+        if (event.matches) {
+            for (const node of nodes) {
+                intersectionObserver.observe(node);
+            }
+        } else {
+            visibleHeights.clear();
+            intersectionObserver.disconnect();
+        }
+    });
+</script>
+
 <style>
     h2 {
         margin-bottom: 1rem;
