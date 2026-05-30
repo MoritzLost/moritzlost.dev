@@ -1,8 +1,9 @@
 ---
 title: moritzlost.dev
 tags:
-    - Astro
     - SSG
+    - Astro
+    - Cloudflare
 repositories:
     - MoritzLost/moritzlost.dev
 website: https://moritzlost.dev

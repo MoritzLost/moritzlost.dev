@@ -1,6 +1,7 @@
 {
     "Astro": "A modern static site builder and progressive web framework that ships zero JavaScript by default and supports interactive islands.",
     "Eleventy": "A static site generator that works with multiple template languages and doesn't require a JavaScript framework.",
+    "Cloudflare": "A web infrastructure and hosting company.",
     "HTML": "HyperText Markup Language.",
     "JavaScript": "The programming language of the web.",
     "Netlify": "A hosting platform for the JAMstack.",

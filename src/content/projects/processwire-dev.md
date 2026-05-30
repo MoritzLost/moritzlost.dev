@@ -1,8 +1,8 @@
 ---
 title: processwire.dev
 tags:
-    - Eleventy
     - SSG
+    - Eleventy
     - ProcessWire
 repositories:
     - MoritzLost/ProcessWireDev
