@@ -32,4 +32,4 @@ npm run generate-preview-images -- --overwrite
 
 © Moritz L'Hoest
 
-The content of this website (text, images, and other media) is my copyright. The source code is available for reference, but please do not reuse the content without permission.
+The content of this website (text, images, and other media) is my copyright. The source code is available for reference, but you may not use the content without permission.
