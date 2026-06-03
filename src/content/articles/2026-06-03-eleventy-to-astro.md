@@ -6,6 +6,8 @@ seo_description: 'In-depth guide on migrating a photo-heavy portfolio website fr
 
 I recently finished a complete rebuild of my photography portfolio site from [Eleventy](https://www.11ty.dev/) to [Astro](https://astro.build/). In this article, I want to document the process and share some insights I had along the way.
 
+This is the finished site: [mehrlicht.photos ↗](https://mehrlicht.photos/)
+
 I finished the first version of the site by February 2021. The site was built on Eleventy and hosted on [Netlify](https://www.netlify.com/). It worked well, but was relatively fragile, and adding photos was somewhat cumbersome. The photos themselves were tracked via [git lfs](https://git-lfs.com/) and hosted on [Netlify Large Media](https://docs.netlify.com/build/git-workflows/large-media/overview/), which also provided image transformations for responsive images. This feature has been deprecated for a while now, and the rest of the tech stack was showing its age as well.
 
 The new site is built with Astro and hosted on Cloudflare. It’s a completely static site, so the site is deployed via Cloudflare Pages with no workers or dynamic endpoints.
