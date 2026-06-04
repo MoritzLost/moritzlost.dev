@@ -1,0 +1,29 @@
+{
+    "name": "moritzlost.dev",
+    "short_name": "moritzlost.dev",
+    "description": "Personal website of Moritz L’Hoest, web developer from Cologne, Germany.",
+    "theme_color": "#33607c",
+    "background_color": "#0a0c0d",
+    "display": "minimal-ui",
+    "orientation": "portrait",
+    "scope": "/",
+    "id": "/?utm_source=pwa",
+    "start_url": "/?utm_source=pwa",
+    "icons": [
+        {
+            "src": "/icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/icon-256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

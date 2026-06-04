@@ -34,20 +34,11 @@ if (image) {
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="color-scheme" content="light dark" />
         <meta name="generator" content={Astro.generator} />
 
         <link rel="preload" href="/fonts/fira-sans/v18/fira-sans-400.woff2" as="font" type="font/woff2" crossorigin />
         <link rel="preload" href="/fonts/vollkorn/v30/vollkorn-400-900.woff2" as="font" type="font/woff2" crossorigin />
-
-        <link rel="sitemap" type="application/xml" href={new URL('sitemap-index.xml', Astro.site)} />
-        <link
-            rel="alternate"
-            type="application/rss+xml"
-            title="Moritz L'Hoest — Articles"
-            href={new URL('rss.xml', Astro.site)}
-        />
 
         <title>{title}</title>
         <meta property="og:title" content={title} />
@@ -57,6 +48,15 @@ if (image) {
         {imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
         {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
         {seoImage && imageAlternativeText && <meta property="og:image:alt" content={imageAlternativeText} />}
+
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
+        <meta name="theme-color" content="#33607c" />
+
+        <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Moritz L'Hoest — Articles" href="/rss.xml" />
     </head>
 
     <body>
