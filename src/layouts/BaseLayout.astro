@@ -66,23 +66,11 @@ const footer = [
                     <div>
                         <h3>{section.heading}</h3>
                         <ul class="footer-links">
-                            {section.links.map((link, index) => (
-                                <>
-                                    <li>
-                                        <a
-                                            href={link.href}
-                                            aria-current={link.href === Astro.url.pathname ? 'page' : undefined}
-                                        >
-                                            {link.label}
-                                        </a>
-                                    </li>
-                                    {index < section.links.length - 1 && (
-                                        <span class="separator" aria-hidden="true">
-                                            ·
-                                        </span>
-                                    )}
-                                </>
-                            ))}
+                            {section.links.map(link => {
+                                const current = link.href === Astro.url.pathname ? 'page' : undefined;
+                                const attr = current ? ` aria-current="${current}"` : '';
+                                return <li set:html={`<a href="${link.href}"${attr}>${link.label}</a>`} />;
+                            })}
                         </ul>
                     </div>
                 ))
@@ -152,6 +140,11 @@ const footer = [
         font-size: var(--font-size--1);
     }
 
+    .footer-links li:not(:last-child)::after {
+        content: '·';
+        margin-inline-start: 1rem;
+    }
+
     .footer-links a[aria-current='page'] {
         text-decoration-thickness: 0.2em;
     }
@@ -162,7 +155,7 @@ const footer = [
             align-items: start;
         }
 
-        .separator {
+        .footer-links li:not(:last-child)::after {
             display: none;
         }
 
