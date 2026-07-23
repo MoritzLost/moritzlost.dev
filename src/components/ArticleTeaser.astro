@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { render } from 'astro:content';
 import Time from './Time.astro';
 
 interface Props {
@@ -8,8 +7,6 @@ interface Props {
 }
 
 const { article } = Astro.props;
-const { remarkPluginFrontmatter } = await render(article);
-const date = new Date(remarkPluginFrontmatter.publishedDate);
 ---
 
 <article aria-labelledby={article.id} class="article-teaser">
@@ -21,7 +18,7 @@ const date = new Date(remarkPluginFrontmatter.publishedDate);
     </h2>
 
     <p class="article-teaser__date">
-        <Time date={date} />
+        <Time date={article.data.date!} />
     </p>
 
     <p class="article-teaser__description">

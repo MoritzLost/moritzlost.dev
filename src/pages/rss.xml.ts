@@ -1,9 +1,9 @@
 import rss from '@astrojs/rss';
 import type { APIRoute } from 'astro';
-import { getArticlesInOrder } from '@utils/collections';
+import { computeArticles } from '@utils/collections';
 
 export const GET: APIRoute = async context => {
-    const articles = await getArticlesInOrder();
+    const articles = await computeArticles();
 
     return rss({
         title: 'Moritz L’Hoest - Articles',

@@ -3,14 +3,14 @@ import { render } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Time from '@components/Time.astro';
-import { getAppearancesInOrder } from '@utils/collections';
+import { computeAppearances } from '@utils/collections';
 
 import portrait from '../images/portrait.jpg';
 import dotAll2023 from '../images/dot-all-2023.jpg';
 import dotAll2023Square from '../images/dot-all-2023-square.jpg';
 import Emoji from '@components/Emoji.astro';
 
-const appearances = await getAppearancesInOrder();
+const appearances = await computeAppearances();
 ---
 
 <BaseLayout
@@ -67,15 +67,14 @@ const appearances = await getAppearancesInOrder();
 
             {
                 appearances.map(async appearance => {
-                    const { Content, remarkPluginFrontmatter } = await render(appearance);
-                    const date = new Date(remarkPluginFrontmatter.publishedDate);
+                    const { Content } = await render(appearance);
                     return (
                         <article class="conference-talk" aria-labelledby={`${appearance.id}`}>
                             <h3 class="conference-talk__heading" id={`${appearance.id}`}>
                                 {appearance.data.title}
                             </h3>
                             <p class="conference-talk__date">
-                                <Time date={date} />
+                                <Time date={appearance.data.date!} />
                             </p>
                             <Content />
                             {appearance.data.links?.length > 0 && (

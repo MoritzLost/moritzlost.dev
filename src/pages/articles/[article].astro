@@ -4,29 +4,29 @@ import TableOfContents from '@components/TableOfContents.astro';
 import Time from '@components/Time.astro';
 import { type CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
+import { computeArticle } from '@utils/collections';
 import { slug } from 'github-slugger';
-import { getArticlesInOrder } from '@utils/collections';
+import { computeArticles } from '@utils/collections';
 
 interface Props {
     article: CollectionEntry<'articles'>;
 }
 
 export async function getStaticPaths() {
-    const articles = await getArticlesInOrder();
+    const articles = await computeArticles();
     return articles.map(article => ({
         params: { article: article.id },
         props: { article },
     }));
 }
 
-const { article } = Astro.props;
-const { Content, headings, remarkPluginFrontmatter } = await render(article);
+const article = computeArticle(Astro.props.article);
+const { Content, headings } = await render(article);
 
 const titleSlug = slug(article.data.title);
 
-const publishedDate = new Date(remarkPluginFrontmatter.publishedDate);
-const hasRevisions = remarkPluginFrontmatter.revisionHistory.length > 1;
-const lastRevision = hasRevisions && new Date(remarkPluginFrontmatter.revisionHistory[0].date);
+const hasRevisions = article.data.revisionHistory!.length > 1;
+const lastRevision = hasRevisions && new Date(article.data.revisionHistory![0].date);
 
 const githubUrl = `https://github.com/MoritzLost/moritzlost.dev/`;
 const githubBranch = 'main';
@@ -46,7 +46,7 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
             <p class="subline-author">
                 —by Moritz L’Hoest
                 <span class="subline-divider" aria-hidden="true">·</span>
-                <Time date={publishedDate} />
+                <Time date={article.data.date!} />
             </p>
         </div>
 
@@ -68,7 +68,7 @@ const editUrl = `${githubUrl}edit/${githubBranch}/${article.filePath}`;
                 <h2 class="h4" id="revisions-and-links">Revisions and links</h2>
                 <dl class="article-meta">
                     <dt>Published</dt>
-                    <dd><Time date={publishedDate} /></dd>
+                    <dd><Time date={article.data.date!} /></dd>
                     {
                         lastRevision && (
                             <>

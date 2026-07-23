@@ -15,6 +15,7 @@ export const collections = {
             generateId: ({ entry }) => entry.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, ''),
         }),
         schema: z.object({
+            date: z.date().optional(),
             title: z.string(),
             links: z.array(
                 z.object({
@@ -31,9 +32,18 @@ export const collections = {
             generateId: ({ entry }) => entry.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, ''),
         }),
         schema: z.object({
+            date: z.date().optional(),
             title: z.string(),
             description: z.string(),
             seo_description: z.string().max(160).optional(),
+            revisionHistory: z
+                .array(
+                    z.object({
+                        date: z.string(),
+                        message: z.string(),
+                    }),
+                )
+                .optional(),
         }),
     }),
     projects: defineCollection({

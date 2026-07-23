@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ArticleTeaser from '@components/ArticleTeaser.astro';
-import { getArticlesInOrder } from '@utils/collections';
+import { computeArticles } from '@utils/collections';
 
-const articles = await getArticlesInOrder();
+const articles = await computeArticles();
 ---
 
 <BaseLayout title="Articles about web development">
