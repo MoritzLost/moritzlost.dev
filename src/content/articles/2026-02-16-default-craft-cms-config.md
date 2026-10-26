@@ -14,9 +14,9 @@ I won’t explain what every setting does. Instead, I’ll focus on _why_ I pref
 
 ## Community notes
 
-I’ve updated the article to incorporate some solid feedback from the [Craft Discord](https://craftcms.com/community). In particular, I’ve switched to using [duration specifications](https://www.php.net/manual/en/dateinterval.construct.php) for all duration-related settings, and added the [`maxInvalidLogins`](https://craftcms.com/docs/5.x/reference/config/general.html#maxinvalidlogins) setting.
+I’ve updated the article to incorporate some solid feedback from the [Craft CMS Discord](https://craftcms.com/community). In particular, I’ve switched to using [duration specifications](https://www.php.net/manual/en/dateinterval.construct.php) for all duration-related settings, and added the [`maxInvalidLogins`](https://craftcms.com/docs/5.x/reference/config/general.html#maxinvalidlogins) setting.
 
-An honorable mention goes to [`preventUserEnumeration`](https://craftcms.com/docs/5.x/reference/config/general.html#preventuserenumeration). Some people insist that this should be used on _all_ sites, period. I’m not quite comfortable with the UX downside, making password resets more difficult, so I don’t include this setting by default. However, you should definitely consider it, especially for sites with frontend user accounts.
+See [honorable mentions](#honorable-mentions) for some additional settings that I don’t use by default at the moment, but that might be worth considering.
 
 You can see the [full revision history on GitHub](https://github.com/MoritzLost/moritzlost.dev/commits/main/src/content/articles/2026-02-16-default-craft-cms-config.md).
 
@@ -129,12 +129,10 @@ This instructs crawlers not to index the site in any environment that’s _not_ 
 Again, the default of five minutes is a bit short. If you have to regularly manage user accounts, constantly having to enter your password gets old fast.
 
 ```php
-->enableTemplateCaching($isDev ? false : empty($_GET['nocache']))
+->enableTemplateCaching($isDev)
 ```
 
-In dev environments, template caching is disabled so you never see cached output. If I need to test the cache behaviour, I just temporarily change the environment to `production` to simulate the full behavior of the production environment. For other environments, I’ve added a sneaky little trick: When the URL includes a query parameter `nocache`, template caching is turned off. This can be used as part of the `action` attribute of a form, to ensure that the target page correctly displays success or error messages, in cases where the form is cached. Or as a quick little tool to see the live output of a page when you need to debug something in production.
-
-Note that this opens up a potential vulnerability: An attacker could execute a DDoS attack by repeatedly requesting pages with that query parameter, forcing your server to render a lot of full pages without template caches. But I haven’t actually seen that happen on any site yet, so for now it can stay.
+In dev environments, template caching is disabled so you never see cached output. If I need to test the cache behaviour, I just temporarily change the environment to `production` to simulate the full behavior of the production environment.
 
 ```php
 ->errorTemplatePrefix('errors/')
@@ -282,6 +280,15 @@ Just some useful aliases. Notably:
 - The `@public` alias goes to the public folder if you use [Vite](https://vite.dev/) as a build tool.
 - The `@base_url` is a replacement for `@web`, which you [shouldn’t use in site URLs](https://craftcms.com/knowledge-base/securing-craft#the-web-alias-and-site-uRLs).
 - The `@fontawesome` alias allows us to pull SVGs directly from the Font Awesome folder in `node_modules/`.
+
+## Honorable mentions
+
+I don’t use the following settings by default, but you should consider them and make an active decision about whether they make sense for your project.
+
+- [`asyncCsrfInputs`](https://craftcms.com/docs/5.x/reference/config/general.html#asynccsrfinputs) – Useful if anything that requires a CSRF token might be cached or served from a static page cache.
+- [`preventUserEnumeration`](https://craftcms.com/docs/5.x/reference/config/general.html#preventuserenumeration) – Some people insist that this should be used on _all_ sites, period. I’m not quite comfortable with the UX downside, making password resets more difficult. However, it should definitely be used for sites with frontend user accounts.
+- [`sendPoweredByHeader`](https://craftcms.com/docs/5.x/reference/config/general.html#sendpoweredbyheader) – I also include a `generator` meta tag with the value `Craft CMS` by default. You can make the case that it saves some bytes on every request, though the savings are minimal. I would absolutely avoid something that indicates the precise _version_ of Craft that you’re running. But just letting people know that the site is powered by Craft isn’t really a security issue. Security by obscurity doesn’t work, anyway.
+- [`staticStatuses`](https://craftcms.com/docs/5.x/reference/config/general.html#staticstatuses) – This makes planned publishing of entries work better with the `{% cache %}` tag. Useful if authors frequently use post dates in the future. When this is enabled, you always need to run [`update-statuses`](https://craftcms.com/docs/5.x/reference/cli.html#update-statuses) at a short interval as a cron job.
 
 ## Finishing up
 
