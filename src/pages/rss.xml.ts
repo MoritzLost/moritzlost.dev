@@ -6,7 +6,7 @@ export const GET: APIRoute = async context => {
     const articles = await computeArticles();
 
     return rss({
-        title: 'Moritz L’Hoest - Articles',
+        title: 'Moritz L’Hoest – Articles',
         description:
             'My occasionally incoherent and infrequent ramblings about web development and possibly other stuff, too.',
         site: context.site!,
